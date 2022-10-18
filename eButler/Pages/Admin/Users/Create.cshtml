@@ -1,0 +1,69 @@
+﻿@page
+@model eButler.Pages.Admin.Users.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Admin/Shared/_AdminLayout.cshtml";
+}
+<div class="content-wrapper">
+          <div class="row">
+             <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Create User</h4>
+                  @*<p class="card-description">
+                    User
+                  </p>*@
+                  
+                    <form class="forms-sample" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="User.Id" class="control-label"></label>
+                            <input asp-for="User.Id" class="form-control" />
+                            <span asp-validation-for="User.Id" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.Email" class="control-label"></label>
+                            <input asp-for="User.Email" class="form-control" />
+                            <span asp-validation-for="User.Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.UserName" class="control-label"></label>
+                            <input asp-for="User.UserName" class="form-control" />
+                            <span asp-validation-for="User.UserName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.Password" class="control-label"></label>
+                            <input asp-for="User.Password" class="form-control" />
+                            <span asp-validation-for="User.Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="User.IsActive" /> @Html.DisplayNameFor(model => model.User.IsActive)
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="User.RoleId" class="control-label"></label>
+                            <select asp-for="User.RoleId" class="form-control" asp-items="ViewBag.RoleId"></select>
+                        </div>
+                        <div class="form-group form-check">
+                            <label class="form-check-label">
+                                <input class="form-check-input" asp-for="User.IsSystemAdmin" /> @Html.DisplayNameFor(model => model.User.IsSystemAdmin)
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+
