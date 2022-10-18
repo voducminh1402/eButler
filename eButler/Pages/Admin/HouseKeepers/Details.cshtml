@@ -1,0 +1,56 @@
+﻿@page
+@model eButler.Pages.Admin.HouseKeepers.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Admin/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>HouseKeeper</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HouseKeeper.FullName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HouseKeeper.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HouseKeeper.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HouseKeeper.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HouseKeeper.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HouseKeeper.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HouseKeeper.Gender)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HouseKeeper.Gender)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HouseKeeper.Image)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HouseKeeper.Image)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.HouseKeeper.IdNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HouseKeeper.IdNavigation.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.HouseKeeper.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

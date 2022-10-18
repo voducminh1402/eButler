@@ -1,0 +1,62 @@
+﻿@page
+@model eButler.Pages.Admin.Users.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Pages/Admin/Shared/_AdminLayout.cshtml";
+}
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Delete User</h4>
+                    <table class="table table-borderless report-table">
+                        <tbody>
+                            <tr>
+                                <td class="text-muted">Email</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.User.Email)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">User Name</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.User.UserName)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Password</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.User.Password)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Is Active</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.User.IsActive)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Is System Admin</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.User.IsSystemAdmin)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Email</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.User.Email)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Role</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.User.Role.Name)</h5></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <form method="post">
+                        <input type="hidden" asp-for="User.Id" />
+                        <input type="submit" value="Delete" class="btn btn-danger" /> |
+                        <a asp-page="./Index">Back to List</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
