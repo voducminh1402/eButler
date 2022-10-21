@@ -1,0 +1,53 @@
+﻿@page
+@model eButler.Pages.Admin.HouseKeepers.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Admin/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>HouseKeeper</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="HouseKeeper.Id" />
+            <div class="form-group">
+                <label asp-for="HouseKeeper.FullName" class="control-label"></label>
+                <input asp-for="HouseKeeper.FullName" class="form-control" />
+                <span asp-validation-for="HouseKeeper.FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HouseKeeper.Phone" class="control-label"></label>
+                <input asp-for="HouseKeeper.Phone" class="form-control" />
+                <span asp-validation-for="HouseKeeper.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HouseKeeper.Address" class="control-label"></label>
+                <input asp-for="HouseKeeper.Address" class="form-control" />
+                <span asp-validation-for="HouseKeeper.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HouseKeeper.Gender" class="control-label"></label>
+                <input asp-for="HouseKeeper.Gender" class="form-control" />
+                <span asp-validation-for="HouseKeeper.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HouseKeeper.Image" class="control-label"></label>
+                <input asp-for="HouseKeeper.Image" class="form-control" />
+                <span asp-validation-for="HouseKeeper.Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
