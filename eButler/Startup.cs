@@ -26,12 +26,20 @@ namespace eButler
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddDbContext<eButlerContext>(options => {
+            services.AddDbContext<eButlerContext>(options =>
+            {
                 string connectstring = Configuration.GetConnectionString("eButlerContext");
                 options.UseSqlServer(connectstring);
             });
+            services.AddAuthentication()
+                .AddGoogle(googleOption =>
+                {
+                    IConfigurationSection configuration = Configuration.GetSection("Authentication:Google");
+                    googleOption.ClientId = configuration["ClientId"];
+                    googleOption.ClientSecret = configuration["ClientSecret"];
+                    googleOption.CallbackPath = "/register";
+                });
         }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
