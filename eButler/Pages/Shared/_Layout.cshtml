@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="~/web/css/ion.rangeSlider.css" />
     <link rel="stylesheet" href="~/web/css/ion.rangeSlider.skinFlat.css" />
     <link rel="stylesheet" href="~/web/css/main.css">
+    <link href="~/web/css/googleloginbutton.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -79,6 +80,14 @@
                                 </ul>
                             </li>
                             <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item active"><a class="nav-link" asp-page="/Login">Login</a></li>
+                            }
+                            @if(User.Identity.IsAuthenticated){
+                                <li class="nav-item active"><a class="nav-link" asp-page="/Logout">Logout</a></li>
+                            }
+                            
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="nav-item"><a href="#" class="cart"><span class="ti-bag"></span></a></li>
