@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Pages/Admin/Shared/_AdminLayout.cshtml";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h1>Create</h1>
@@ -29,11 +29,6 @@
                 <span asp-validation-for="HouseKeeper.Phone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HouseKeeper.Address" class="control-label"></label>
-                <input asp-for="HouseKeeper.Address" class="form-control" />
-                <span asp-validation-for="HouseKeeper.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="HouseKeeper.Gender" class="control-label"></label>
                 <input asp-for="HouseKeeper.Gender" class="form-control" />
                 <span asp-validation-for="HouseKeeper.Gender" class="text-danger"></span>
@@ -53,5 +48,4 @@
 <div>
     <a asp-page="Index">Back to List</a>
 </div>
-
 

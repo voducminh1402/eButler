@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace eButler.Pages.Admin
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
     public class IndexModel : PageModel
     {
         public void OnGet()

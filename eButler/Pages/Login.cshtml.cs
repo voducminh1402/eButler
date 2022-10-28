@@ -1,4 +1,5 @@
 using BusinessLogic.Models;
+using DataAccess.Repostiories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -16,10 +17,10 @@ namespace eButler.Pages
     {
         [BindProperty]
         public User User { get; set; }
-        public eButlerContext _context;
-        public LoginModel(eButlerContext context)
+        public IUserRepository userRepository;
+        public LoginModel(IUserRepository userRepository)
         {
-            _context = context;
+            this.userRepository = userRepository;
         }
 
         public void OnGet(string returnUrl)
@@ -28,7 +29,7 @@ namespace eButler.Pages
         }
         public async Task<IActionResult> OnPostAsync(string returnUrl)
         {
-            User user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == User.UserName && u.Password == User.Password);
+            User user = userRepository.Login(User.UserName, User.Password);
             if (user == null)
             {
                 TempData["Error"] = "User name or Password is not valid!";
@@ -37,8 +38,8 @@ namespace eButler.Pages
             ViewData["ReturnUrl"] = returnUrl;
             var claims = new List<Claim>();
             claims.Add(new Claim("username", User.UserName));
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, User.UserName));
-            if(user.RoleId == "1")
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, User.UserName == null ? User.Id : User.UserName));
+            if(user.IsSystemAdmin)
             {
                 claims.Add(new Claim(ClaimTypes.Role, "admin"));
             } 

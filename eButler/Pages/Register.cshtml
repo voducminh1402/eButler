@@ -1,6 +1,7 @@
 ﻿@page
 @model eButler.Pages.RegisterModel
 @{
+    var error = TempData["Error"] as string;
 }
 <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
@@ -39,28 +40,31 @@
             <div class="col-lg-6">
                 <div class="login_form_inner">
                     <h3>Create New Account</h3>
+                    @if (!string.IsNullOrEmpty(error))
+                    {
+                        <label class="text-danger" for="f-option2">@error</label>
+                    }
                     <form class="row login_form"
-                          action="contact_process.php"
                           method="post"
                           id="contactForm"
                           novalidate="novalidate">
                         <div class="col-md-12 form-group">
                             <input type="text"
                                    class="form-control"
-                                   id="name"
-                                   name="name"
+                                   asp-for="User.UserName"
                                    placeholder="Username"
                                    onfocus="this.placeholder = ''"
-                                   onblur="this.placeholder = 'Username'" />
+                                   onblur="this.placeholder = 'Username'" 
+                                   required/>
                         </div>
                         <div class="col-md-12 form-group">
                             <input type="text"
                                    class="form-control"
-                                   id="name"
-                                   name="name"
+                                   asp-for="User.Password"
                                    placeholder="Password"
                                    onfocus="this.placeholder = ''"
-                                   onblur="this.placeholder = 'Password'" />
+                                   onblur="this.placeholder = 'Password'" 
+                                   required/>
                         </div>
                         <div class="col-md-12 form-group">
                             <!-- <div class="creat_account">
