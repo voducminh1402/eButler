@@ -12,6 +12,12 @@
     var authen = "Basic QWVaekZGREkxMi1PZG54dUhJM2xFMGVmdHhqZHU0ZWhWekRsSDZlcW5rU2V1NVI3Nk1PWV90Q21PV2RpMUNwdHpLckFsVHdRUWptMk5HNkE6RUI3TW15OXBNWEstazB0Q1VCMnFQMVlfRUR6YTFiZElBYUhETmlMSVR4ZHpVZjh4OUNERDBRMktTdDFxdVNOdzd4d1JMSVA4MEZ5S2FmLU4=";
     var capture;
 
+    const callBackend = async (url, data) => {
+        await fetch(url+`?status=${data}`, {
+            method: 'GET',
+        });
+    };
+
     const responses = async (capture) => {
         await fetch(capture, {
             method: 'POST',
@@ -25,8 +31,8 @@
         }).then(function (data) {
             console.log(typeof (data)); // this will be a string
             var json = JSON.parse(data);
-            console.log(json);
-
+            console.log(json.status);
+            callBackend("https://localhost:5001/checkoutsuccess", json.status);
         })
     };
 
