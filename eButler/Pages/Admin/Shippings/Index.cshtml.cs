@@ -23,7 +23,7 @@ namespace eButler.Pages.Admin.Shippings
         public async Task OnGetAsync()
         {
             Shipping = await _context.Shippings
-                .Include(s => s.IdNavigation).ToListAsync();
+                .Include(s => s.HouseKeeper).ToListAsync();
         }
     }
 }

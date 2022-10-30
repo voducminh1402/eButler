@@ -20,7 +20,7 @@ namespace eButler.Pages.Admin.Shippings
 
         public IActionResult OnGet()
         {
-        ViewData["Id"] = new SelectList(_context.Orders, "Id", "Id");
+        ViewData["HouseKeeperId"] = new SelectList(_context.HouseKeepers, "Id", "Id");
             return Page();
         }
 

@@ -1,0 +1,89 @@
+﻿@page
+@model eButler.Pages.ShippingsModel
+@{
+}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Shipping Address</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">
+                        Home<span class="lnr lnr-arrow-right"></span>
+                    </a>
+                    <a href="index.html">
+                        Profile<span class="lnr lnr-arrow-right"></span>
+                    </a>
+                    <a href="category.html">Shipping Address</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Banner Area -->
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Address</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Country</th>
+                            <th scope="col">Distric</th>
+                            <th scope="col">Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model.Shippings){
+<tr>
+                            <td>
+                                    <h5>@Html.DisplayFor(modelItem => item.Address)</h5>
+                            </td>
+                            <td>
+                                    <h5>@Html.DisplayFor(modelItem => item.Status)</h5>
+                            </td>
+                                <td>
+                                    <h5>@Html.DisplayFor(modelItem => item.Phone)</h5>
+                                </td>
+                                <td>
+                                    <h5>@Html.DisplayFor(modelItem => item.City)</h5>
+                                </td>
+                                <td>
+                                    <h5>@Html.DisplayFor(modelItem => item.Country)</h5>
+                                </td>
+                                <td>
+                                    <h5>@Html.DisplayFor(modelItem => item.Distric)</h5>
+                                </td>
+                                <td>
+                                    <h5>@Html.DisplayFor(modelItem => item.Note)</h5>
+                                </td>
+                        </tr>
+                        }
+                        
+
+                        <tr class="out_button_area">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="checkout_btn_inner d-flex align-items-center">
+                                    <a class="primary-btn" href="#">Create new shipping address</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Cart Area =================-->

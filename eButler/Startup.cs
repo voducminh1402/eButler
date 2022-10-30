@@ -1,18 +1,22 @@
 using BusinessLogic.Models;
+using DataAccess.Repostiories;
 using DataAccess.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -36,7 +40,11 @@ namespace eButler
                 string connectstring = Configuration.GetConnectionString("eButlerContext");
                 options.UseSqlServer(connectstring);
             });
-            services.AddScoped<UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IShippingRepository, ShippingRepository>();
+            services.AddScoped<IHouseKeeperRepository, HouseKeeperRepository>();
+            services.AddHttpContextAccessor();
+            services.AddScoped<eButlerContext>();
             services.AddAuthentication( options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -56,7 +64,7 @@ namespace eButler
                             var claim = new Claim(scheme.Key, scheme.Value);
                             var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
                             claimsIdentity.AddClaim(claim);
-                            var userService = context.HttpContext.RequestServices.GetService<UserService>();
+                            var userService = context.HttpContext.RequestServices.GetService<IUserRepository>();
                             var nameIdentifier = claimsIdentity.Claims.FirstOrDefault(m => m.Type == ClaimTypes.NameIdentifier)?.Value;
                             if (userService != null && nameIdentifier != null)
                             {
@@ -79,11 +87,16 @@ namespace eButler
                     options.SaveTokens = true;
                     options.Events = new OpenIdConnectEvents()
                     {
+                        OnTokenResponseReceived = async context =>
+                        {
+                            await Task.CompletedTask;
+                        },
                         OnTokenValidated = async context =>
                         {
                             if (context.Principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value == "114702882049473722316")
                             {
                                 var claim = new Claim(ClaimTypes.Role, "admin");
+                                var claim2 = new Claim(ClaimTypes.Email, "google");
                                 var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
                                 claimsIdentity.AddClaim(claim);
                             }
@@ -100,6 +113,13 @@ namespace eButler
                 //    googleOption.AuthorizationEndpoint += "?promp=consent";
                 //})
                 ;
+            services.AddSession();
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
+                options.HttpsPort = 5001;
+            });
+            
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -119,7 +139,7 @@ namespace eButler
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthentication();
             app.UseAuthorization();
 

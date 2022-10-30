@@ -1,0 +1,122 @@
+﻿@page
+@model eButler.Pages.ProfileModel
+@{
+    var gender = TempData["gender"] as string;
+}
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+      <div class="container">
+        <div
+          class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end"
+        >
+          <div class="col-first">
+            <h1>Profile</h1>
+            <nav class="d-flex align-items-center">
+              <a href="index.html"
+                >Home<span class="lnr lnr-arrow-right"></span
+              ></a>
+              <a href="single-product.html">Profile</a>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Banner Area -->
+<!--================Checkout Area =================-->
+<section class="checkout_area section_gap">
+    <div style="width: 60%" class="container">
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>Profile</h3>
+                    <form class="row contact_form"
+                          method="post"
+                          novalidate="novalidate">
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text"
+                                   class="form-control"
+                                   asp-for="HouseKeeper.FullName" 
+                                   placeholder="Full Name"
+                                   />
+                        </div>
+
+                        <div class="col-md-6 form-group p_star">
+                            <input type="text"
+                                   class="form-control"
+                                   asp-for="HouseKeeper.Phone"
+                                   placeholder="Phone" />
+                        </div>
+                        
+                        <div class="col-md-12 form-group p_star">
+                            <input type="text"
+                                   class="form-control"
+                                   asp-for="Users.Email"
+                                   placeholder="Email Address" />
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <select name="gender" class="country_select">
+                                @if(!string.IsNullOrEmpty(gender)){
+                                    if(gender == "Male"){
+<option value="Male" selected>Male</option>
+                                    <option value="Female">Female</option>
+                                    } else {
+                                        <option value="Male" selected>Male</option>
+                                    <option selected value="Female">Female</option>
+                                    }
+                                    
+                                } else {
+<option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                }
+                                
+                            </select>
+                        </div>
+                        @*@if(Model.Shippings != null && Model.Shippings.Count > 0){
+foreach(var shipping in Model.Shippings){
+                            var index = 0;
+                            <div class="col-md-12 form-group p_star">
+                            <input type="text"
+                                   class="form-control"
+                                   name="@shipping.Address + @index"
+                                   value="@shipping.Address"
+                                   placeholder="Address line + @(++index)" />
+                        </div>
+                        } 
+                        }else{*@
+                            <div style="display: flex; justify-content: center"
+                                class="col-md-12 form-group p_star">
+                            <a
+                                asp-page="/Shippings"
+                                asp-route-id="@Model.Users.Id"
+                                class="primary-btn align-items-center">
+                                Shipping Address
+                            </a>
+                            </div>
+                        @*}*@
+                        
+                        
+                        <div style="display: flex; justify-content: space-between"
+                             class="col-md-12 form-group">
+                            <button style="width: 200px"
+                                    type="submit"
+                                    name="submit"
+                                    value="save"
+                                    class="primary-btn align-items-center">
+                                Save
+                            </button>
+                            <button style="width: 200px"
+                                    type="submit"
+                                    name="submit"
+                                    value="cancel"
+                                    class="primary-btn align-items-center">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Checkout Area =================-->

@@ -30,13 +30,13 @@ namespace eButler.Pages.Admin.Shippings
             }
 
             Shipping = await _context.Shippings
-                .Include(s => s.IdNavigation).FirstOrDefaultAsync(m => m.Id == id);
+                .Include(s => s.HouseKeeper).FirstOrDefaultAsync(m => m.Id == id);
 
             if (Shipping == null)
             {
                 return NotFound();
             }
-           ViewData["Id"] = new SelectList(_context.Orders, "Id", "Id");
+           ViewData["HouseKeeperId"] = new SelectList(_context.HouseKeepers, "Id", "Id");
             return Page();
         }
 

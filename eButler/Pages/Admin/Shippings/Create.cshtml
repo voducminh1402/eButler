@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Pages/Admin/Shared/_AdminLayout.cshtml";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h1>Create</h1>
@@ -16,7 +16,8 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Shipping.Id" class="control-label"></label>
-                <select asp-for="Shipping.Id" class ="form-control" asp-items="ViewBag.Id"></select>
+                <input asp-for="Shipping.Id" class="form-control" />
+                <span asp-validation-for="Shipping.Id" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Shipping.Status" class="control-label"></label>
@@ -54,6 +55,10 @@
                 <span asp-validation-for="Shipping.Note" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Shipping.HouseKeeperId" class="control-label"></label>
+                <select asp-for="Shipping.HouseKeeperId" class ="form-control" asp-items="ViewBag.HouseKeeperId"></select>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -64,6 +69,3 @@
     <a asp-page="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
