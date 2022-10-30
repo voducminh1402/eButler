@@ -5790,4 +5790,23 @@ label {
   .footer-text i {
     color: #ffba00; }
 
+.loadProductSupplierBySupplierId {
+    border: none;
+    background-color: white;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+
+.loadProductSupplierBySupplierId:hover {
+    color: #FFBA00;
+}
+
+.reloadSupplier{
+    color: white;
+    }
+
+    .reloadSupplier:hover {
+        color: #FFBA00;
+    }
 /*# sourceMappingURL=main.css.map */
