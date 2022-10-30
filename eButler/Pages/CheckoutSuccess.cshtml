@@ -1,0 +1,62 @@
+﻿@page
+@model eButler.Pages.CheckoutSuccessModel
+@{
+}
+
+<script>
+    const queryString = window.location.search;
+    console.log(queryString);
+    const urlParams = new URLSearchParams(queryString);
+    var token = urlParams.get('token')
+    var url = "https://www.sandbox.paypal.com/v2/checkout/orders/" + token + "/authorize";
+    var authen = "Basic QWVaekZGREkxMi1PZG54dUhJM2xFMGVmdHhqZHU0ZWhWekRsSDZlcW5rU2V1NVI3Nk1PWV90Q21PV2RpMUNwdHpLckFsVHdRUWptMk5HNkE6RUI3TW15OXBNWEstazB0Q1VCMnFQMVlfRUR6YTFiZElBYUhETmlMSVR4ZHpVZjh4OUNERDBRMktTdDFxdVNOdzd4d1JMSVA4MEZ5S2FmLU4=";
+    var capture;
+
+    const responses = async (capture) => {
+        await fetch(capture, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': authen,
+                'Access-Control-Allow-Origin': 'no-cors'
+            }
+        }).then(function (response) {
+            return response.text();
+        }).then(function (data) {
+            console.log(typeof (data)); // this will be a string
+            var json = JSON.parse(data);
+            console.log(json);
+
+        })
+    };
+
+    const userAction = async () => {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': authen,
+                'Access-Control-Allow-Origin': 'no-cors'
+            }
+        }).then(function (response) {
+            return response.text();
+        }).then(function (data) {
+            console.log(typeof(data)); // this will be a string
+            var json = JSON.parse(data);
+            console.log(json.purchase_units[0].payments.authorizations[0].links[1].href);
+            capture = json.purchase_units[0].payments.authorizations[0].links[1].href;
+            
+            responses(capture);
+        });
+        //window.location = url;
+       
+        //window.location.href = response.url;
+        //extract JSON from the http response
+        // do something with myJson
+        //console.log(myjson);
+    }
+    //if (url != null && url != "") {
+        window.onload = userAction;
+    //}
+
+</script>

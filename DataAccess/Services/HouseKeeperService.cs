@@ -49,10 +49,10 @@ namespace DataAccess.Services
             _context.SaveChanges();
             return entity.Entity;
         }
-        public HouseKeeper UpdateHouseKeeper(HouseKeeper house, User u)
+        public HouseKeeper UpdateHouseKeeper(HouseKeeper house, User u, string id)
         {
-            var housekeeper = GetHouseKeeperById(house.Id);
-            var user = userService.GetUserById(u.Id);
+            var housekeeper = GetHouseKeeperById(id);
+            var user = userService.GetUserById(id);
             if(housekeeper != null && user != null)
             {
                 user.Email = u.Email;
