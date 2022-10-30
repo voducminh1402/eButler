@@ -88,9 +88,9 @@
                                 <li class="nav-item active"><a class="nav-link" asp-page="/Login">Login</a></li>
                             }
                             @if(User.Identity.IsAuthenticated){
-                                var id = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+                                
                                 <li class="nav-item active"><a class="nav-link" asp-page="/Logout">Logout</a></li>
-                                <li class="nav-item active"><a class="nav-link" asp-page="/Logout">@id.Value</a></li>
+                                
                             }
                             
                         </ul>

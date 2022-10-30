@@ -6,14 +6,17 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -37,8 +40,10 @@ namespace eButler
                 string connectstring = Configuration.GetConnectionString("eButlerContext");
                 options.UseSqlServer(connectstring);
             });
-            services.AddScoped<UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IShippingRepository, ShippingRepository>();
+            services.AddScoped<IHouseKeeperRepository, HouseKeeperRepository>();
+            services.AddHttpContextAccessor();
             services.AddScoped<eButlerContext>();
             services.AddAuthentication( options =>
             {
@@ -108,6 +113,13 @@ namespace eButler
                 //    googleOption.AuthorizationEndpoint += "?promp=consent";
                 //})
                 ;
+            services.AddSession();
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
+                options.HttpsPort = 5001;
+            });
+            
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -127,7 +139,7 @@ namespace eButler
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthentication();
             app.UseAuthorization();
 
