@@ -22,12 +22,9 @@
         </div>
       </div>
     </section>
-    @if(true){
- <h2 id="url">@url</h2>
- <h2 id="authen">@authen</h2>
-    }else {
-        <h2>null roi</h2>
-    }
+ <input id="url" value="@url" type="hidden"></input>
+ <input id="authen" value="@authen" type="hidden"></input>
+
    
     <!-- End Banner Area -->
 
@@ -239,8 +236,9 @@
     <!--================End Checkout Area =================-->
 
     <script>
-        var url = document.getElementById("url").innerHTML;
-    var authen = document.getElementById("authen").innerHTML;
+        var url = document.getElementById("url").value;
+    var authen = document.getElementById("authen").value;
+    console.log(url);
 
 
 
