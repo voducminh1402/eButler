@@ -64,6 +64,39 @@
                                             </td>
                                         </tr>
                                     }
+                                    @if(Model.listProductSupplier != null){
+                                        @foreach (var ls in Model.listProductSupplier)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => ls.Name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => ls.Quantiy)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => ls.Price)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => ls.Discount)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => ls.Image)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => ls.Product.Id)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => ls.Supplier.Id)
+                                                </td>
+                                                <td class="template-demo" style="padding-top: 0; padding-bottom: 0">
+                                                    <a class="btn btn-primary btn-icon-text" asp-page="./Edit" asp-route-id="@ls.Id">Edit</a>
+                                                    <a class="btn btn-info btn-icon-text" asp-page="./Details" asp-route-id="@ls.Id">Details</a>
+                                                    <a class="btn btn-danger btn-icon-text" asp-page="./Delete" asp-route-id="@ls.Id">Delete</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
 
                                 </tbody>
                             </table>
