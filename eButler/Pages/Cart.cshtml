@@ -1,0 +1,130 @@
+﻿@page
+@model eButler.Pages.CartModel
+@{
+}
+
+
+
+    <section class="cart_area">
+        <div class="container">
+            @if (Model.Cart != null && Model.Cart.Count > 0)
+            {
+                double total = 0;
+
+            <div class="cart_inner">
+                @if (Model.Error != null)
+                {
+                <div class="alert alert-danger" role="alert">
+                    @(Model.Error)
+                </div>
+                }
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Cart)
+                            {
+                                <tr>
+                                    <form action="/Cart" method="Post">
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img src="img/cart.jpg" alt="">
+                                            </div>
+                                            <div class="media-body">
+                                                <p>@(item.Product.Name)</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>$@(item.Product.Price)</h5>
+                                    </td>
+                                    <td>
+                                        <div class="product_count">
+                                            <input type="hidden" name="productId" value="@(item.Product.ProductId)" />
+                                            <input type="text" name="quantity" id="sst" min="1" step="1" maxlength="12" value="@(item.Quantity)" title="Quantity:"
+                                                   class="input-text qty">
+                                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                                    class="increase items-count" type="button">
+                                                <i class="lnr lnr-chevron-up"></i>
+                                            </button>
+                                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                                    class="reduced items-count" type="button">
+                                                <i class="lnr lnr-chevron-down"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>$@(item.Product.Price * item.Quantity)</h5>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-warning" name="action" value="Update" type="submit">
+                                            Update
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger" name="action" value="Remove" type="submit">
+                                            Remove
+                                        </button>
+                                    </td>
+                                    @Html.AntiForgeryToken()
+                                    </form>
+                                </tr>
+                                @if (item != null)
+                                {
+                                    total += item.Product.Price * item.Quantity;
+                                }
+                            }
+
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <h5>Subtotal</h5>
+                                </td>
+                                <td>
+                                    <h5>$@(total)</h5>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr class="out_button_area">
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <div class="checkout_btn_inner d-flex align-items-center">
+                                        <a class="gray_btn" href="#">Continue Shopping</a>
+                                        <a class="primary-btn" href="/Checkout">Proceed to checkout</a>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            }
+            else
+            {
+                <div class="alert alert-danger" role="alert">
+                    Cart empty!
+                </div>
+            }
+        </div>
+    </section>

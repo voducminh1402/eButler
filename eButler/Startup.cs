@@ -41,7 +41,10 @@ namespace eButler
                 options.UseSqlServer(connectstring);
             });
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
             services.AddScoped<IShippingRepository, ShippingRepository>();
+            services.AddScoped<IProductSupplierRepository, ProductSupplierRepository>();
             services.AddScoped<IHouseKeeperRepository, HouseKeeperRepository>();
             services.AddScoped<ICheckOutRepository, CheckOutRepository>();
             services.AddHttpContextAccessor();

@@ -2,11 +2,13 @@ using BusinessLogic.Models;
 using DataAccess.Repostiories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -35,6 +37,7 @@ namespace eButler.Pages
                 TempData["Error"] = "User name or Password is not valid!";
                 return Page();
             }
+            HttpContext.Session.SetString("LOGIN_USER", JsonConvert.SerializeObject(user));
             ViewData["ReturnUrl"] = returnUrl;
             var claims = new List<Claim>();
             claims.Add(new Claim("username", User.UserName));
