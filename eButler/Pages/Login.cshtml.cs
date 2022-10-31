@@ -39,10 +39,14 @@ namespace eButler.Pages
             var claims = new List<Claim>();
             claims.Add(new Claim("username", User.UserName));
             claims.Add(new Claim(ClaimTypes.NameIdentifier, User.UserName == null ? User.Id : User.UserName));
-            if(user.IsSystemAdmin)
+            if (user.IsSystemAdmin)
             {
                 claims.Add(new Claim(ClaimTypes.Role, "admin"));
-            } 
+            }
+            if (user.RoleId.Equals("3"))
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "Supplier"));
+            }
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             var items = new Dictionary<string, string>();
