@@ -1,6 +1,6 @@
 ﻿using BusinessLogic.Models;
-using System;
 using DataAccess.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +12,7 @@ namespace DataAccess.Repostiories
     {
         IEnumerable<ProductSupplier> GetProductSupplierBySupplierID(String id);
         IEnumerable<ProductSupplier> GetAllProductSupplier();
+        ProductSupplier GetProductSupplierById(string id);
     }
 
     public class ProductSupplierRepository : IProductSupplierRepository
@@ -24,6 +25,11 @@ namespace DataAccess.Repostiories
         public IEnumerable<ProductSupplier> GetProductSupplierBySupplierID(String id)
         {
             return ProductSupplierService.GetInstance.GetProductSupplierBySupplierID(id);
+        }
+        
+        public ProductSupplier GetProductSupplierById(string id)
+        {
+            return ProductSupplierService.GetInstance.GetProductById(id);
         }
     }
 }

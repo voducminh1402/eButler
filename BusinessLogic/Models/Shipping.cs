@@ -16,7 +16,6 @@ namespace BusinessLogic.Models
         public string Phone { get; set; }
         public string Note { get; set; }
         public string HouseKeeperId { get; set; }
-
         public virtual HouseKeeper HouseKeeper { get; set; }
     }
 }

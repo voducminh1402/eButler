@@ -1,4 +1,3 @@
-using eButler.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PayPal.Api;
@@ -13,6 +12,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
+using BusinessLogic.Models;
 
 namespace eButler.Pages
 {
@@ -59,12 +59,34 @@ namespace eButler.Pages
         private string yourpwd = "EB7Mmy9pMXK-k0tCUB2qP1Y_EDza1bdIAaHDNiLITxdzUf8x9CDD0Q2KSt1quSNw7xwRLIP80FyKaf-N";
         private string newUrl { get; set; }
         private StringContent data { get; set; }
+        public List<CartItem> Cart { get; set; }
+
+        [BindProperty]
+        public Shipping Shipping { get; set; }
+
+        public CheckoutModel()
+        {
+            Cart = new List<CartItem>();
+        }
+
+        public List<CartItem> GetCartItem()
+        {
+            var session = HttpContext.Session;
+            string cart = session.GetString("CART");
+            if (cart != null)
+            {
+                return JsonConvert.DeserializeObject<List<CartItem>>(cart);
+            }
+            return Cart;
+        }
+
         public void OnGet()
         {
+            Cart = GetCartItem();
         }
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(Shipping Shipping, double amount)
         {
-            data = new StringContent("{\"intent\": \"AUTHORIZE\",\"purchase_units\": [{\"amount\": {\"currency_code\": \"USD\",\"value\": \"100.00\"}}],\"application_context\": {\"brand_name\": \"eButler\",\"shipping_preference\": \"NO_SHIPPING\",\"return_url\": \"https://localhost:5001/checkoutsuccess\"}}", Encoding.UTF8, "application/json");
+            data = new StringContent("{\"intent\": \"AUTHORIZE\",\"purchase_units\": [{\"amount\": {\"currency_code\": \"USD\",\"value\": \""+ amount +"\"}}],\"application_context\": {\"brand_name\": \"eButler\",\"shipping_preference\": \"NO_SHIPPING\",\"return_url\": \"https://localhost:5001/checkoutsuccess?status=COMPLETED\"}}", Encoding.UTF8, "application/json");
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(URL);
             var authen = new AuthenticationHeaderValue(
@@ -90,6 +112,7 @@ namespace eButler.Pages
                     newUrl = link.Href;
                 }
             }
+            HttpContext.Session.SetString("ShippingInfo", JsonConvert.SerializeObject(Shipping));
             HttpContext.Session.SetString("url", newUrl);
             HttpContext.Session.SetString("authen", "Basic " + Convert.ToBase64String(
             System.Text.ASCIIEncoding.ASCII.GetBytes(
@@ -100,8 +123,6 @@ namespace eButler.Pages
             System.Text.ASCIIEncoding.ASCII.GetBytes(
                $"{yourusername}:{yourpwd}"));
             return Page();
-            return RedirectToPage("/CheckoutSuccess");
-            
             //result = JsonConvert.DeserializeObject(result_string);
         }
     }
