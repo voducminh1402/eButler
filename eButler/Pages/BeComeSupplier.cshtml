@@ -1,8 +1,9 @@
 ﻿@page
-@model eButler.Pages.RegisterModel
+@model eButler.Pages.BeComeSupplierModel
 @{
-    var error = TempData["Error"] as string;
+    var error = TempData["Error"] as String;
 }
+
 <!-- Start Banner Area -->
 <section class="banner-area organic-breadcrumb">
     <div class="container">
@@ -39,7 +40,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="login_form_inner">
-                    <h3>Create New Account</h3>
+                    <h3>Create New Supplier Account</h3>
                     @if (!string.IsNullOrEmpty(error))
                     {
                         <label class="text-danger" for="f-option2">@error</label>
@@ -54,8 +55,8 @@
                                    asp-for="User.UserName"
                                    placeholder="Username"
                                    onfocus="this.placeholder = ''"
-                                   onblur="this.placeholder = 'Username'" 
-                                   required/>
+                                   onblur="this.placeholder = 'Username'"
+                                   required />
                         </div>
                         <div class="col-md-12 form-group">
                             <input type="text"
@@ -63,8 +64,8 @@
                                    asp-for="User.Password"
                                    placeholder="Password"
                                    onfocus="this.placeholder = ''"
-                                   onblur="this.placeholder = 'Password'" 
-                                   required/>
+                                   onblur="this.placeholder = 'Password'"
+                                   required />
                         </div>
                         <div class="col-md-12 form-group">
                             <!-- <div class="creat_account">
@@ -76,7 +77,6 @@
                             <button type="submit" value="submit" class="primary-btn">
                                 Create
                             </button>
-                            <a asp-page="/BeComeSupplier">To be a Supplier?</a>
                             <!-- <a href="#">Forgot Password?</a> -->
                         </div>
                     </form>

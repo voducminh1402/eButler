@@ -87,11 +87,18 @@
                                 
                                 <li class="nav-item active"><a class="nav-link" asp-page="/Login">Login</a></li>
                             }
+
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Supplier"))
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-page="/Admin/ProductSuppliers/Index">Manage Your Product</a></li>
+                            }
+
                             @if(User.Identity.IsAuthenticated){
                                 
                                 <li class="nav-item active"><a class="nav-link" asp-page="/Logout">Logout</a></li>
                                 
                             }
+                            
                             
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
