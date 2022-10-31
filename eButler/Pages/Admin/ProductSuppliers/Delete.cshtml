@@ -1,0 +1,121 @@
+﻿@page
+@model eButler.Pages.Admin.ProductSupliers.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Delete ProductSupplier</h4>
+                    <table class="table table-borderless report-table">
+                        <tbody>
+                            <tr>
+                                <td class="text-muted">Name</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.ProductSupplier.Name)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Quantiy</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.ProductSupplier.Quantiy)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Price</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.ProductSupplier.Price)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Discount</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.ProductSupplier.Discount)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Image</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.ProductSupplier.Image)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">ProductId</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.ProductSupplier.Product.Id)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">SupplierId</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.ProductSupplier.Supplier.Id)</h5></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <form method="post">
+                        <input type="hidden" asp-for="ProductSupplier.Id" />
+                        <input type="submit" value="Delete" class="btn btn-danger" /> |
+                        <a asp-page="./Index">Back to List</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ProductSupplier</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductSupplier.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductSupplier.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductSupplier.Quantiy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductSupplier.Quantiy)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductSupplier.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductSupplier.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductSupplier.Discount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductSupplier.Discount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductSupplier.Image)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductSupplier.Image)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductSupplier.Product)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductSupplier.Product.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductSupplier.Supplier)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ProductSupplier.Supplier.Id)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="ProductSupplier.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>*@

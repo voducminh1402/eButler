@@ -306,16 +306,25 @@
             <!-- partial:partials/_sidebar.html -->
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Admin/Index">
-                            <i class="icon-grid menu-icon"></i>
-                            <span class="menu-title">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
+                    
+                    @if (!User.IsInRole("Supplier"))
+                   {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Admin/Index">
+                                <i class="icon-grid menu-icon"></i>
+                                <span class="menu-title">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                         <a class="nav-link" asp-page="/Admin/Users/Index">
                             <i class="icon-grid menu-icon"></i>
                             <span class="menu-title">User Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Admin/ProductSuppliers/Index">
+                            <i class="icon-grid menu-icon"></i>
+                            <span class="menu-title">ProSup Management</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -412,6 +421,18 @@
                             <span class="menu-title">Documentation</span>
                         </a>
                     </li>
+                   }
+
+                    @if (User.IsInRole("Supplier"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Admin/ProductSuppliers/Index">
+                                <i class="icon-grid menu-icon"></i>
+                                <span class="menu-title">ProSup Management</span>
+                            </a>
+                        </li>
+                    }
+                    
                 </ul>
             </nav>
             <!-- partial -->

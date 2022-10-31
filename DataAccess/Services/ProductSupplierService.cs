@@ -28,6 +28,22 @@ namespace DataAccess.Services
             }
         }
 
+        public ProductSupplierService(eButlerContext context)
+        {
+            _context = context;
+        }
+
+        public IEnumerable<ProductSupplier> GetProductSupplierBySupplierID(String id)
+        {
+            var productSupplier = _context.ProductSuppliers.Where(u => u.Id == id || u.SupplierId == id).ToList();
+            return productSupplier;
+        }
+
+        public IEnumerable<ProductSupplier> GetAllProductSupplier()
+        {
+            return _context.ProductSuppliers.ToList();
+        }
+
         public ProductSupplier GetProductById(string id)
         {
             var productSupplier = _context.ProductSuppliers.Where(x => x.Id.Equals(id)).FirstOrDefault();

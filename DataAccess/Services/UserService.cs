@@ -83,6 +83,21 @@ namespace DataAccess.Services
             _context.SaveChanges();
             return entity.Entity;
         }
+
+        public User AddNewSupplier(User user)
+        {
+            if (GetUserByUserName(user.UserName) != null)
+                throw new Exception("User name is already exist!");
+            user.Id = Guid.NewGuid().ToString();
+            user.IsActive = true;
+            user.Email = user.UserName;
+            user.RoleId = "3";
+            user.IsSystemAdmin = false;
+            var entity = _context.Users.Add(user);
+            _context.SaveChanges();
+            return entity.Entity;
+        }
+
         public IEnumerable<User> GetUsers()
         {
             return _context.Users.ToList();
