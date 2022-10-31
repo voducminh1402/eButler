@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using BusinessLogic.Models;
 using DataAccess.Repostiories;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace eButler.Pages.Admin.ProductSupliers
 {
@@ -30,6 +32,11 @@ namespace eButler.Pages.Admin.ProductSupliers
             if (User.IsInRole("Supplier"))
             {
                 //Chua lay duoc data theo SupplierID de CRUD
+                //listProductSupplier = _productSupplierRepository.GetProductSupplierBySupplierID("3");
+                var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                var id = result.Principal.Claims.FirstOrDefault(x => x.Type == "supplierID").Value;
+                ProductSupplier = await _context.ProductSuppliers.Include(p => p.Product)
+               .Include(p => p.Supplier).Where(p => p.SupplierId.Equals(id)).ToListAsync();
             }
             else
             {
