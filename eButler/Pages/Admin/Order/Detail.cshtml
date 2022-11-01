@@ -1,0 +1,122 @@
+﻿@page
+@model eButler.Pages.Admin.Order.DetailModel
+@{
+}
+
+<section class="order_details section_gap">
+    <div class="container mt-5 mb-5">
+        <div class="row order_d_inner">
+            <div class="col-lg-4">
+                <div class="details_item">
+                    <h4>Order Info</h4>
+                    <ul class="list">
+                        <li><a href="#"><span>Order ID</span> :<br /> @(Model.OrderResponses.Order.Id)</a></li>
+                        <li><a href="#"><span>Date</span> : @(Model.OrderResponses.Order.CreateDate)</a></li>
+                        <li><a href="#"><span>Total</span> : USD @(Model.OrderResponses.Order.TotalPrice)</a></li>
+                        <li><a href="#"><span>Payment method</span> : Paypal</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="details_item">
+                    <h4>Billing Address</h4>
+                    <ul class="list">
+                        <li><a href="#"><span>Street</span> : @(Model.OrderResponses.Shipping.Distric)</a></li>
+                        <li><a href="#"><span>City</span> : @(Model.OrderResponses.Shipping.City)</a></li>
+                        <li><a href="#"><span>Country</span> : @(Model.OrderResponses.Shipping.Country)</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="details_item">
+                    <h4>Shipping Address</h4>
+                    <ul class="list">
+                        <li><a href="#"><span>Status</span>
+                                        <div class="form-group">
+                                            <form action="" method="post">
+                                                <input type="hidden" name="id" value="@(Model.OrderResponses.Shipping.Id)"/>
+                                                <select name="status" onchange="this.form.submit()" class="form-control form-control-sm" id="exampleFormControlSelect3">
+                                                    @if (Model.OrderResponses.Shipping.Status.Equals("Pending"))
+                                                    {
+                                                        <option selected value="Pending">Pending</option>
+                                                        <option value="Shipping">Shipping</option>
+                                                        <option value="Canceled">Canceled</option>
+                                                        <option value="Shipped">Shipped</option>
+                                                    }
+                                                    @if (Model.OrderResponses.Shipping.Status.Equals("Shipping"))
+                                                    {
+                                                        <option value="Pending">Pending</option>
+                                                        <option selected value="Shipping">Shipping</option>
+                                                        <option value="Canceled">Canceled</option>
+                                                        <option value="Shipped">Shipped</option>
+                                                    }
+                                                    @if (Model.OrderResponses.Shipping.Status.Equals("Canceled"))
+                                                    {
+                                                        <option value="Pending">Pending</option>
+                                                        <option value="Shipping">Shipping</option>
+                                                        <option selected value="Canceled">Canceled</option>
+                                                        <option value="Shipped">Shipped</option>
+                                                    }
+                                                    @if (Model.OrderResponses.Shipping.Status.Equals("Shipped"))
+                                                    {
+                                                        <option value="Pending">Pending</option>
+                                                        <option value="Shipping">Shipping</option>
+                                                        <option  value="Canceled">Canceled</option>
+                                                        <option selected value="Shipped">Shipped</option>
+                                                    }
+
+
+
+                                                </select>
+                                            </form>
+                                        </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="order_details_table">
+            <h2>Order Details</h2>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model.OrderResponses.OrderDetails)
+                        {
+                            <tr>
+                                <td>
+                                    <p>@(item.ProductSupplier.Name)</p>
+                                </td>
+                                <td>
+                                    <h5>x @(item.Quantity)</h5>
+                                </td>
+                                <td>
+                                    <p>$@(item.ProductSupplier.Price)</p>
+                                </td>
+                            </tr>
+                        }
+                        
+                        <tr>
+                            <td>
+                                <h4>Total</h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p>$@(Model.OrderResponses.Order.TotalPrice)</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

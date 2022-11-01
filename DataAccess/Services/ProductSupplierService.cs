@@ -10,7 +10,6 @@ namespace DataAccess.Services
     public class ProductSupplierService
     {
         private ProductSupplierService() { }
-
         private readonly eButlerContext _context = DbContextService.GetDbContext;
         private static ProductSupplierService instance = null;
         private static readonly object instanceLock = new object();
@@ -45,5 +44,16 @@ namespace DataAccess.Services
             return _context.ProductSuppliers.ToList();
         }
 
+        public ProductSupplier GetProductById(string id)
+        {
+            var productSupplier = _context.ProductSuppliers.Where(x => x.Id.Equals(id)).FirstOrDefault();
+
+            if (productSupplier != null)
+            {
+                return productSupplier;
+            }
+
+            return null;
+        }
     }
 }

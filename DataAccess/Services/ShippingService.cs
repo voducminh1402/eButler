@@ -52,6 +52,25 @@ namespace DataAccess.Services
             _context.SaveChanges();
             return entity.Entity;
         }
+
+        public Shipping CreateShipping(Shipping shippingAdd)
+        {
+            var shipping = new Shipping()
+            {
+                Id = Guid.NewGuid().ToString(),
+                Status = shippingAdd.Status,
+                Distric = shippingAdd.Distric,
+                City = shippingAdd.City,
+                Country = shippingAdd.Country,
+                Phone = shippingAdd.Phone,
+                Note = shippingAdd.Note,
+                HouseKeeperId = shippingAdd.HouseKeeperId
+            };
+            var entity = _context.Shippings.Add(shipping);
+            _context.SaveChanges();
+            return entity.Entity;
+        }
+
         public Shipping UpdateShipping(Shipping shipping)
         {
             var s = GetShippingById(shipping.Id);
@@ -72,6 +91,14 @@ namespace DataAccess.Services
             {
                 throw new Exception("Shipping address is not exist!");
             }
+        }
+
+        public void ChangeStatus(string id, string status)
+        {
+            var shipping  = _context.Shippings.Where(x => x.Id.Equals(id)).FirstOrDefault();
+            shipping.Status = status;
+            _context.Shippings.Update(shipping);
+            _context.SaveChanges();
         }
     }
 }
