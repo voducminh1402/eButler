@@ -69,5 +69,11 @@ namespace DataAccess.Services
             _context.SaveChanges();
         }
 
+        public Supplier getSupplierByID(String id)
+        {
+            var sup = _context.Suppliers.Where(u => u.Id.Equals(id)).FirstOrDefault();
+            return sup;
+        }
+
     }
 }

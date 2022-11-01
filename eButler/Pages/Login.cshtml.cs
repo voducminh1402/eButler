@@ -20,9 +20,12 @@ namespace eButler.Pages
         [BindProperty]
         public User User { get; set; }
         public IUserRepository userRepository;
-        public LoginModel(IUserRepository userRepository)
+        public ISupplierRepository supplierRepository;
+        Supplier Sup;
+        public LoginModel(IUserRepository userRepository, ISupplierRepository supplierRepository)
         {
             this.userRepository = userRepository;
+            this.supplierRepository=supplierRepository;
         }
 
         public void OnGet(string returnUrl)
@@ -32,6 +35,8 @@ namespace eButler.Pages
         public async Task<IActionResult> OnPostAsync(string returnUrl)
         {
             User user = userRepository.Login(User.UserName, User.Password);
+            Sup = null;
+            Sup = supplierRepository.getSupplierByID(user.Id);
             if (user == null)
             {
                 TempData["Error"] = "User name or Password is not valid!";
@@ -47,7 +52,7 @@ namespace eButler.Pages
             {
                 claims.Add(new Claim(ClaimTypes.Role, "admin"));
             }
-            if (user.RoleId.Equals("3"))
+            if (Sup != null)
             {
                 claims.Add(new Claim(ClaimTypes.Role, "Supplier"));
             }
