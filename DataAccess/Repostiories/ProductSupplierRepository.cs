@@ -15,6 +15,7 @@ namespace DataAccess.Repostiories
         ProductSupplier GetProductSupplierById(string id);
         IEnumerable<ProductSupplier> GetProductSupplierByProductID(String id);
         void deleteProductSupplierById(string id);
+        ProductSupplier GetProductSupplierByProductId(String id);
 
 
     }
@@ -42,5 +43,10 @@ namespace DataAccess.Repostiories
         }
 
         public void deleteProductSupplierById(string id) => ProductSupplierService.GetInstance.deleteProductSupplierById(id);
+
+        public ProductSupplier GetProductSupplierByProductId(string id)
+        {
+            return ProductSupplierService.GetInstance.GetProductSupplierByProductId(id);
+        }
     }
 }

@@ -49,8 +49,17 @@ namespace eButler.Pages.Admin.Products
 
             if (Product != null)
             {
-                _context.Products.Remove(Product);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Products.Remove(Product);
+                    await _context.SaveChangesAsync();
+                }
+                catch(Exception ex)
+                {
+                    return Page();
+                    ex = new Exception("Can't detele this Product because it have ProductSupplier!!!");
+                }
+                
             }
 
             return RedirectToPage("./Index");
