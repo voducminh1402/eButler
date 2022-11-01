@@ -41,14 +41,14 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="ProductSupplier.ProductId" class="control-label"></label>
-                            <select asp-for="ProductSupplier.ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+                            <select asp-for="ProductSupplier.ProductId" class="form-control" asp-items="ViewBag.ProductName"></select>
                         </div>
                         <div class="form-group">
                             <label asp-for="ProductSupplier.SupplierId" class="control-label"></label>
                             @if(User.IsInRole("Supplier")){
-                                <input readonly asp-for="ProductSupplier.Name" class="form-control" value=@id/>
+                                <input readonly asp-for="ProductSupplier.Id" class="form-control" value=@id/>
                             }else{
-                                <select asp-for="ProductSupplier.SupplierId" class="form-control" asp-items="ViewBag.SupplierIds"></select>
+                                <select asp-for="ProductSupplier.SupplierId" class="form-control" asp-items="ViewBag.SupplierName"></select>
                             }
                             
                         </div>

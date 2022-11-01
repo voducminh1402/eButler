@@ -10,12 +10,12 @@ namespace DataAccess.Repostiories
 {
     public interface ISupplierRepository
     {
-        IEnumerable<Supplier> GetSupplierBySupplierID(String id);
+        IEnumerable<Supplier> GetSupplierBySupplierID(string id);
         IEnumerable<Supplier> GetAllSupplier();
 
         void AddNewSupplier(Supplier supplier);
 
-        Supplier getSupplierByID(String id); 
+        Supplier getSupplierByID(string id); 
     }
 
     public class SupplierRepository : ISupplierRepository
@@ -32,7 +32,7 @@ namespace DataAccess.Repostiories
             return SupplierService.GetInstance.getSupplierByID(id);
         }
 
-        public IEnumerable<Supplier> GetSupplierBySupplierID(String id)
+        public IEnumerable<Supplier> GetSupplierBySupplierID(string id)
         {
             return SupplierService.GetInstance.GetSupplierBySupplierID(id);
         }
