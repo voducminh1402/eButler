@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BusinessLogic.Models;
 
-namespace eButler.Pages.Admin.ProductSupliers
+namespace eButler.Pages.Admin.Products
 {
     public class CreateModel : PageModel
     {
@@ -20,15 +20,12 @@ namespace eButler.Pages.Admin.ProductSupliers
 
         public IActionResult OnGet()
         {
-        ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Id");
-        ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id");
-        ViewData["ProductName"] = new SelectList(_context.Products, "Id", "Name");
-        ViewData["SupplierName"] = new SelectList(_context.Suppliers, "Id", "Name");
+        ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
             return Page();
         }
 
         [BindProperty]
-        public ProductSupplier ProductSupplier { get; set; }
+        public Product Product { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -38,7 +35,7 @@ namespace eButler.Pages.Admin.ProductSupliers
                 return Page();
             }
 
-            _context.ProductSuppliers.Add(ProductSupplier);
+            _context.Products.Add(Product);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

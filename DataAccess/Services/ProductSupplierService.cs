@@ -39,9 +39,26 @@ namespace DataAccess.Services
             return productSupplier;
         }
 
+        public IEnumerable<ProductSupplier> GetProductSupplierByProductID(String id)
+        {
+            var productSupplier = _context.ProductSuppliers.Where(u => u.ProductId == id).ToList();
+            return productSupplier;
+        }
+
+        public ProductSupplier GetProductSupplierByProductId(String id)
+        {
+            var productSupplier = _context.ProductSuppliers.Where(u => u.ProductId == id).FirstOrDefault();
+            return productSupplier;
+        }
+
         public IEnumerable<ProductSupplier> GetAllProductSupplier()
         {
             return _context.ProductSuppliers.ToList();
+        }
+
+        public void deleteProductSupplierById(string id)
+        {
+            _context.ProductSuppliers.Remove(GetProductSupplierByProductId(id));
         }
 
         public ProductSupplier GetProductById(string id)

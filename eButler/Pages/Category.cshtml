@@ -1,9 +1,11 @@
 ﻿	@page
+@using DataAccess.Repostiories
 @model eButler.Pages.CategoryModel
 
 @{
-    ViewData["Title"] = "Category";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Category";
+	Layout = "~/Pages/Shared/_Layout.cshtml";
+	SupplierRepository supplierRepository = new SupplierRepository();
 }
 <!-- Start Banner Area -->
 	<section class="banner-area organic-breadcrumb">
@@ -38,6 +40,32 @@
 					   {
 						   <form method="post">
 							<input asp-for="SupplierID" type="hidden" value="@Html.ValueFor(modelItem => item.Id)">
+							<input class="loadProductSupplierBySupplierId" type="submit" value="@Html.DisplayFor(modelItem => item.Name)"/>
+						<li class="main-nav-list">
+							<a data-toggle="collapse" href="#fruitsVegetable" aria-expanded="false" aria-controls="fruitsVegetable">
+								<span class="lnr lnr-arrow-right"></span>
+							</a>
+							
+						</li>
+						   </form>
+						   
+					   }
+						
+				</div>
+				<div class="sidebar-categories">
+					<div class="head"><a class="reloadSupplier" asp-page="/Category" >Browse Product</a></div>
+					<ul class="main-categories">
+					<a class="loadProductSupplierBySupplierId" type="submit" asp-page="/Category">All Product</a>
+					<li class="main-nav-list">
+						<a data-toggle="collapse" href="#fruitsVegetable" aria-expanded="false" aria-controls="fruitsVegetable">
+							<span class="lnr lnr-arrow-right"></span>
+						</a>
+
+					</li>
+						@foreach (var item in Model.listProduct)
+					   {
+						   <form method="post">
+							<input asp-for="ProductID" type="hidden" value="@Html.ValueFor(modelItem => item.Id)">
 							<input class="loadProductSupplierBySupplierId" type="submit" value="@Html.DisplayFor(modelItem => item.Name)"/>
 						<li class="main-nav-list">
 							<a data-toggle="collapse" href="#fruitsVegetable" aria-expanded="false" aria-controls="fruitsVegetable">
@@ -93,6 +121,12 @@
 									<h6>
 										@Html.DisplayFor(modelItem => item.Name)
 									</h6>
+									<h7>
+										@{
+											var Supplier = supplierRepository.getSupplierByID(item.SupplierId);
+										}
+										from @Html.DisplayFor(modelItem => Supplier.Name)
+									</h7>
 									<div class="price">
 										<h6>$@Html.DisplayFor(modelItem => item.Price)</h6>
 									</div>
