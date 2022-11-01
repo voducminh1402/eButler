@@ -12,10 +12,14 @@ namespace DataAccess.Repostiories
     {
         IEnumerable<Supplier> GetSupplierBySupplierID(String id);
         IEnumerable<Supplier> GetAllSupplier();
+
+        void AddNewSupplier(Supplier supplier);
     }
 
     public class SupplierRepository : ISupplierRepository
     {
+        public void AddNewSupplier(Supplier supplier) => SupplierService.GetInstance.AddNewSupplier(supplier);
+
         public IEnumerable<Supplier> GetAllSupplier()
         {
             return SupplierService.GetInstance.GetAllSupplier();
