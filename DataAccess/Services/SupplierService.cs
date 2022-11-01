@@ -57,6 +57,12 @@ namespace DataAccess.Services
             _context.SaveChanges();
         }
 
+        public void AddNewSupplier(Supplier sup)
+        {
+            _context.Suppliers.Add(sup);
+            _context.SaveChanges();
+        }
+
         public void DeleteProductSupplier(ProductSupplier ps)
         {
             _context.ProductSuppliers.Remove(ps);
