@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Services
 {
-    public class SupplierService
+    public class ProductService
     {
-        private SupplierService() { }
-
+        private ProductService() { }
         private readonly eButlerContext _context = DbContextService.GetDbContext;
-        private static SupplierService instance = null;
+        private static ProductService instance = null;
         private static readonly object instanceLock = new object();
-        public static SupplierService GetInstance
+        public static ProductService GetInstance
         {
             get
             {
@@ -22,32 +21,32 @@ namespace DataAccess.Services
                 {
                     if (instance is null)
                     {
-                        instance = new SupplierService();
+                        instance = new ProductService();
                     }
                     return instance;
                 }
             }
         }
 
-        public SupplierService(eButlerContext context)
+        public ProductService(eButlerContext context)
         {
             _context = context;
         }
 
-        public IEnumerable<Supplier> GetSupplierBySupplierID(String id)
+        public IEnumerable<ProductSupplier> GetAllProductSupplierByProductID(string id)
         {
-            var productSupplier = _context.Suppliers.Where(u => u.Id.Equals(id)).ToList();
-            return productSupplier;
+            var product = _context.ProductSuppliers.Where(u => u.ProductId.Equals(id)).ToList();
+            return product;
         }
 
-        public IEnumerable<Supplier> GetAllSupplier()
+        public IEnumerable<Product> GetAllProduct()
         {
-            return _context.Suppliers.ToList();
+            return _context.Products.ToList();
         }
 
-        public ProductSupplier GetProductSupplierByPSID(String id)
+        public ProductSupplier GetProductSupplierByProductID(string id)
         {
-            var ps = _context.ProductSuppliers.Where(u => u.Id.Equals(id)).FirstOrDefault();
+            var ps = _context.ProductSuppliers.Where(u => u.ProductId.Equals(id)).FirstOrDefault();
             return ps;
         }
 
@@ -63,8 +62,9 @@ namespace DataAccess.Services
             _context.SaveChanges();
         }
 
-        public void DeleteProductSupplier(ProductSupplier ps)
+        public void DeleteProduct(String id)
         {
+            var ps = GetProductSupplierByProductID(id);
             _context.ProductSuppliers.Remove(ps);
             _context.SaveChanges();
         }
@@ -74,6 +74,5 @@ namespace DataAccess.Services
             var sup = _context.Suppliers.Where(u => u.Id.Equals(id)).FirstOrDefault();
             return sup;
         }
-
     }
 }
