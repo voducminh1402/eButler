@@ -1,0 +1,111 @@
+﻿@page
+@model eButler.Pages.ProfileSupplierModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Admin/Shared/_AdminLayout.cshtml";
+
+}
+
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Your Profile</h4>
+                    <table class="table table-borderless report-table">
+                        <tbody>
+                            <tr>
+                                <td class="text-muted">Name</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.Supplier.Name)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Country</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.Supplier.Country)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Phone</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.Supplier.Phone)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Disciption</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.Supplier.Disciption)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Image</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.Supplier.Image)</h5></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Supplier.Id</td>
+
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.Supplier.IdNavigation.Id)</h5></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <a class="btn btn-primary btn-icon-text" asp-page="/EditProfileSupplier" asp-route-id="@Model.Supplier.Id">Edit</a> |
+                        <a asp-page="./Index">Back to HomePage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@*<h1>ProfileSupplier</h1>
+
+<div>
+    <h4>Supplier</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Supplier.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Supplier.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Supplier.Country)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Supplier.Country)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Supplier.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Supplier.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Supplier.Disciption)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Supplier.Disciption)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Supplier.Image)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Supplier.Image)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Supplier.IdNavigation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Supplier.IdNavigation.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Supplier.Id">Edit</a> |
+    <a asp-page="./Index">Back to Home</a>
+</div>*@

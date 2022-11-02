@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -40,12 +41,20 @@ namespace eButler
                 string connectstring = Configuration.GetConnectionString("eButlerContext");
                 options.UseSqlServer(connectstring);
             });
+
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
             services.AddScoped<IShippingRepository, ShippingRepository>();
+            services.AddScoped<IProductSupplierRepository, ProductSupplierRepository>();
             services.AddScoped<IHouseKeeperRepository, HouseKeeperRepository>();
+            services.AddScoped<IProductSupplierRepository, ProductSupplierRepository>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ICheckOutRepository, CheckOutRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddHttpContextAccessor();
             services.AddScoped<eButlerContext>();
+
             services.AddAuthentication( options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -94,14 +103,46 @@ namespace eButler
                         },
                         OnTokenValidated = async context =>
                         {
+                            var userService = context.HttpContext.RequestServices.GetService<IUserRepository>();
+
                             if (context.Principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value == "114702882049473722316")
                             {
-                                var claim = new Claim(ClaimTypes.Role, "admin");
+                                var claim = new Claim(ClaimTypes.Role, "Admin");
                                 var claim2 = new Claim(ClaimTypes.Email, "google");
                                 var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
                                 claimsIdentity.AddClaim(claim);
+                                var nameIdentifier = claimsIdentity.Claims.FirstOrDefault(m => m.Type == ClaimTypes.NameIdentifier)?.Value;
+                                if (userService != null && nameIdentifier != null)
+                                {
+                                    var user = userService.GetUserById(nameIdentifier);
+                                    if (user is null)
+                                    {
+                                        user = userService.AddNewUser(claimsIdentity.Claims?.ToList());
+                                    }
+                                }
                             }
-
+                            else
+                            {
+                                var claim = new Claim(ClaimTypes.Role, "User");
+                                var claim2 = new Claim(ClaimTypes.Email, "google");
+                                var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
+                                claimsIdentity.AddClaim(claim);
+                                var nameIdentifier = claimsIdentity.Claims.FirstOrDefault(m => m.Type == ClaimTypes.NameIdentifier)?.Value;
+                                if (userService != null && nameIdentifier != null)
+                                {
+                                    var user = userService.GetUserById(nameIdentifier);
+                                    if (user is null)
+                                    {
+                                        user = userService.AddNewUser(claimsIdentity.Claims?.ToList());
+                                    }
+                                    else
+                                    {
+                                        HttpContextAccessor contextAccessor = new HttpContextAccessor();
+                                        contextAccessor.HttpContext.Session.SetString("LOGIN_USER", Newtonsoft.Json.JsonConvert.SerializeObject(user));
+                                    }
+                                }
+                            }
+                            
                         }
                     };
                 })
@@ -114,6 +155,16 @@ namespace eButler
                 //    googleOption.AuthorizationEndpoint += "?promp=consent";
                 //})
                 ;
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "admin"));
+                options.AddPolicy("User", policy => policy.RequireClaim(ClaimTypes.Role, "User", "user"));
+                options.AddPolicy("Supplier", policy => policy.RequireClaim(ClaimTypes.Role, "Supplier", "supplier"));
+                options.AddPolicy("All", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "Supplier", "User"));
+                options.AddPolicy("AdSup", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "Supplier"));
+            });
+
             services.AddSession();
             services.AddHttpsRedirection(options =>
             {

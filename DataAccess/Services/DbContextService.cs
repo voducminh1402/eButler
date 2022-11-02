@@ -15,14 +15,7 @@ namespace DataAccess.Services
         {
             get
             {
-                lock (instanceLock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new eButlerContext();
-                    }
-                    return instance;
-                }
+                return new eButlerContext();
             }
         }
     }

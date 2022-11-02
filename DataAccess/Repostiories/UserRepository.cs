@@ -17,6 +17,7 @@ namespace DataAccess.Repostiories
         IEnumerable<User> GetAllUsers();
         User Login(string userName, string password);
         User GetUserByUserName(string username);
+        User AddNewSupplier(User supplier);
     }
     public class UserRepository : IUserRepository
     {
@@ -28,6 +29,11 @@ namespace DataAccess.Repostiories
         public User AddNewUser(User user)
         {
             return UserService.GetInstance.AddNewUser(user);
+        }
+
+        public User AddNewSupplier(User supplier)
+        {
+            return UserService.GetInstance.AddNewSupplier(supplier);
         }
 
         public IEnumerable<User> GetAllUsers()

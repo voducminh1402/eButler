@@ -14,12 +14,24 @@ namespace DataAccess.Repostiories
         IEnumerable<Shipping> GetShippingsForHouseKeeper(string id);
         Shipping CreateShipping(string status, string distric, string city, string country, string phone, string note, string houseKeeperId);
         Shipping UpdateShipping(Shipping shipping);
+        Shipping CreateShipping(Shipping shipping);
+        void ChangeStatus(string id, string status);
     }
     public class ShippingRepository : IShippingRepository
     {
+        public void ChangeStatus(string id, string status)
+        {
+            ShippingService.GetInstance.ChangeStatus(id, status);
+        }
+
         public Shipping CreateShipping(string status, string distric, string city, string country, string phone, string note, string houseKeeperId)
         {
             return ShippingService.GetInstance.CreateShipping(status, distric, city, country, phone, note, houseKeeperId);
+        }
+
+        public Shipping CreateShipping(Shipping shipping)
+        {
+            return ShippingService.GetInstance.CreateShipping(shipping);
         }
 
         public Shipping GetShippingById(string id)

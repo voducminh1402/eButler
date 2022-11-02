@@ -17,7 +17,6 @@ namespace BusinessLogic.Models
         public string UserId { get; set; }
         public double TotalPrice { get; set; }
         public DateTime CreateDate { get; set; }
-
         public virtual HouseKeeper User { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }

@@ -1,0 +1,131 @@
+﻿@page
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authentication.Cookies
+@model eButler.Pages.Admin.ProductSupliers.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Admin/Shared/_AdminLayout.cshtml";
+    var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    var id = result.Principal.Claims.FirstOrDefault(x => x.Type == "supplierID").Value;
+}
+
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Edit ProductSupplier</h4>
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="ProductSupplier.Id" />
+                        <div class="form-group">
+                            <label asp-for="ProductSupplier.Name" class="control-label"></label>
+                            <input asp-for="ProductSupplier.Name" class="form-control" />
+                            <span asp-validation-for="ProductSupplier.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProductSupplier.Quantiy" class="control-label"></label>
+                            <input asp-for="ProductSupplier.Quantiy" class="form-control" />
+                            <span asp-validation-for="ProductSupplier.Quantiy" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProductSupplier.Price" class="control-label"></label>
+                            <input asp-for="ProductSupplier.Price" class="form-control" />
+                            <span asp-validation-for="ProductSupplier.Price" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProductSupplier.ProductId" class="control-label"></label>
+                            <select asp-for="ProductSupplier.ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+                            <span asp-validation-for="ProductSupplier.ProductId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProductSupplier.SupplierId" class="control-label"></label>
+                            @if (User.IsInRole("Supplier"))
+                            {
+                                <input readonly asp-for="ProductSupplier.Name" class="form-control" value=@id />
+                            }
+                            else
+                            {
+                                <select asp-for="ProductSupplier.SupplierId" class="form-control" asp-items="ViewBag.SupplierIds"></select>
+                            }
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProductSupplier.Discount" class="control-label"></label>
+                            <input asp-for="ProductSupplier.Discount" class="form-control" />
+                            <span asp-validation-for="ProductSupplier.Discount" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProductSupplier.Image" class="control-label"></label>
+                            <input asp-for="ProductSupplier.Image" class="form-control" />
+                            <span asp-validation-for="ProductSupplier.Image" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<h1>Edit</h1>
+
+<h4>ProductSupplier</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProductSupplier.Id" />
+            <div class="form-group">
+                <label asp-for="ProductSupplier.Name" class="control-label"></label>
+                <input asp-for="ProductSupplier.Name" class="form-control" />
+                <span asp-validation-for="ProductSupplier.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductSupplier.Quantiy" class="control-label"></label>
+                <input asp-for="ProductSupplier.Quantiy" class="form-control" />
+                <span asp-validation-for="ProductSupplier.Quantiy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductSupplier.Price" class="control-label"></label>
+                <input asp-for="ProductSupplier.Price" class="form-control" />
+                <span asp-validation-for="ProductSupplier.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductSupplier.ProductId" class="control-label"></label>
+                <select asp-for="ProductSupplier.ProductId" class="form-control" asp-items="ViewBag.ProductId"></select>
+                <span asp-validation-for="ProductSupplier.ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductSupplier.SupplierId" class="control-label"></label>
+                <select asp-for="ProductSupplier.SupplierId" class="form-control" asp-items="ViewBag.SupplierId"></select>
+                <span asp-validation-for="ProductSupplier.SupplierId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductSupplier.Discount" class="control-label"></label>
+                <input asp-for="ProductSupplier.Discount" class="form-control" />
+                <span asp-validation-for="ProductSupplier.Discount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductSupplier.Image" class="control-label"></label>
+                <input asp-for="ProductSupplier.Image" class="form-control" />
+                <span asp-validation-for="ProductSupplier.Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>*@
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@

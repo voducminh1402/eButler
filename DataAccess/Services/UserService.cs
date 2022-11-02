@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Models;
+using DataAccess.Repostiories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,17 @@ namespace DataAccess.Services
 {
     public class UserService
     {
-        private UserService() { }
+        
         
         private readonly eButlerContext _context = DbContextService.GetDbContext;
+        public readonly ISupplierRepository _supplierRepository;
         private static UserService instance = null;
         private static readonly object instanceLock = new object();
+
+        private UserService()
+        {
+            _supplierRepository = new SupplierRepository();
+        }
         public static UserService GetInstance
         {
             get
@@ -30,9 +37,10 @@ namespace DataAccess.Services
                 }
             }
         }
-        public UserService(eButlerContext context)
+        public UserService(eButlerContext context, ISupplierRepository supplierRepository)
         {
             _context = context;
+            _supplierRepository = new SupplierRepository();
         }
         public User GetUserById(string nameIdentifier)
         {
@@ -83,6 +91,33 @@ namespace DataAccess.Services
             _context.SaveChanges();
             return entity.Entity;
         }
+
+        public User AddNewSupplier(User user)
+        {
+            if (GetUserByUserName(user.UserName) != null)
+                throw new Exception("User name is already exist!");
+            user.Id = Guid.NewGuid().ToString();
+            user.IsActive = true;
+            user.Email = user.UserName;
+            user.RoleId = "2";
+            user.IsSystemAdmin = false;
+            Supplier supplier = new Supplier();
+            supplier.Id = user.Id;
+            //supplier.IdNavigation = user.Id;
+            supplier.Name = "empty";
+            supplier.Country = "empty";
+            supplier.Phone = "empty";
+            supplier.Disciption = "empty";
+            supplier.Image = "empty";
+            
+            var entity = _context.Users.Add(user);
+            //entity = _context.Suppliers.Add(supplier);
+            _context.SaveChanges();
+            _supplierRepository.AddNewSupplier(supplier);
+            return entity.Entity;
+        }
+
+
         public IEnumerable<User> GetUsers()
         {
             return _context.Users.ToList();
