@@ -24,6 +24,7 @@ namespace eButler.Pages.Admin.ProductSupliers
         ViewData["SupplierId"] = new SelectList(_context.Suppliers, "Id", "Id");
         ViewData["ProductName"] = new SelectList(_context.Products, "Id", "Name");
         ViewData["SupplierName"] = new SelectList(_context.Suppliers, "Id", "Name");
+        
             return Page();
         }
 

@@ -21,6 +21,7 @@ namespace eButler.Pages.Admin.Products
         public IActionResult OnGet()
         {
         ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
+        ViewData["CategoryName"] = new SelectList(_context.Categories, "Id", "Name");
             return Page();
         }
 

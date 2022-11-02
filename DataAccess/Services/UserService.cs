@@ -99,7 +99,7 @@ namespace DataAccess.Services
             user.Id = Guid.NewGuid().ToString();
             user.IsActive = true;
             user.Email = user.UserName;
-            user.RoleId = "2";
+            user.RoleId = "3";
             user.IsSystemAdmin = false;
             Supplier supplier = new Supplier();
             supplier.Id = user.Id;
