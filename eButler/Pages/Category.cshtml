@@ -128,11 +128,13 @@
 										from @Html.DisplayFor(modelItem => Supplier.Name)
 									</h7>
 									<div class="price">
-										<h6>$@Html.DisplayFor(modelItem => item.Price)</h6>
+                                        <h6>
+                                            @String.Format("{0:C}", item.Price)
+                                        </h6>
 									</div>
 									<div class="prd-bottom">
                                         <form class="social-info" method="post" action="/Cart">
-                                            <input type="hidden" name="productId" value="@item.ProductId" />
+                                            <input type="hidden" name="productId" value="@item.Id" />
                                             <input type="hidden" name="quantity" value="1" />
                                             <button type="submit" class="ti-bag social-info-btn"></button>
                                             @Html.AntiForgeryToken()

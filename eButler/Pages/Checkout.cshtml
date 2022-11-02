@@ -45,6 +45,7 @@
                              novalidate="novalidate">
                             <div class="col-md-12 form-group p_star">
                                 <input type="text"
+                                       required
                                        class="form-control"
                                        id="number"
                                        name="Phone"
@@ -52,6 +53,7 @@
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <input type="text"
+                                       required
                                        class="form-control"
                                        id="add1"
                                        name="Address"
@@ -60,6 +62,7 @@
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <input type="text"
+                                       required
                                        class="form-control"
                                        id="add1"
                                        name="Distric"
@@ -68,6 +71,7 @@
                             <input type="hidden" value="@(currentUser.Id)" name="HouseKeeperId" />
                             <div class="col-md-12 form-group p_star">
                                 <input type="text"
+                                       required
                                        class="form-control"
                                        id="add2"
                                        name="City"
@@ -75,6 +79,7 @@
                             </div>
                             <div class="col-md-12 form-group p_star">
                                 <input type="text"
+                                       required
                                        class="form-control"
                                        id="add2"
                                        name="Country"
@@ -128,7 +133,14 @@
                                 </p>
                             </div>
                             <input type="hidden" name="amount" value="@(total)" />
-                            <button class="primary-btn">Proceed to Paypal</button>
+                            @if (total == 0)
+                            {
+                                <button disabled class="primary-btn">Proceed to Paypal</button>
+                            }
+                            else
+                            {
+                                <button class="primary-btn">Proceed to Paypal</button>
+                            }
                         </div>
                     </div>
                 </form>
