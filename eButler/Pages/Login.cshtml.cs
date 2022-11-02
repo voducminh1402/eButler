@@ -68,7 +68,7 @@ namespace eButler.Pages
                 
             await HttpContext.SignInAsync(claimsPrincipal, properties);
 
-            if (user.RoleId.Equals("1") || user.RoleId.Equals("2"))
+            if (user.RoleId.Equals("1") || user.RoleId.Equals("3"))
             {
                 returnUrl = "/Admin/Index";
             }
