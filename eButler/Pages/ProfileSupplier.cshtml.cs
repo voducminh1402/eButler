@@ -9,9 +9,11 @@ using BusinessLogic.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eButler.Pages
 {
+    [Authorize(Policy = "Supplier")]
     public class ProfileSupplierModel : PageModel
     {
         private readonly BusinessLogic.Models.eButlerContext _context;

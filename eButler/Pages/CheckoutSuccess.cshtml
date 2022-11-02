@@ -3,6 +3,32 @@
 @{
 }
 
+<section class="page_404 cart_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 ">
+                <div class="col-sm-10 col-sm-offset-1  text-center">
+                    <div class="four_zero_four_bg">
+                        <h1 class="text-center ">404</h1>
+
+
+                    </div>
+
+                    <div class="contant_box_404">
+                        <h3 class="h2">
+                            Look like you're lost
+                        </h3>
+
+                        <p>the page you are looking for not avaible!</p>
+
+                        <a href="" class="link_404">Go to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <script>
     const queryString = window.location.search;
     console.log(queryString);
@@ -13,7 +39,7 @@
     var capture;
 
     const callBackend = async (url, data) => {
-        await fetch(url+`?status=${data}`, {
+        await fetch(url + `?status=${data}`, {
             method: 'GET',
         });
     };
@@ -47,22 +73,22 @@
         }).then(function (response) {
             return response.text();
         }).then(function (data) {
-            console.log(typeof(data)); // this will be a string
+            console.log(typeof (data)); // this will be a string
             var json = JSON.parse(data);
             console.log(json.purchase_units[0].payments.authorizations[0].links[1].href);
             capture = json.purchase_units[0].payments.authorizations[0].links[1].href;
-            
+
             responses(capture);
         });
         //window.location = url;
-       
+
         //window.location.href = response.url;
         //extract JSON from the http response
         // do something with myJson
         //console.log(myjson);
     }
     //if (url != null && url != "") {
-        window.onload = userAction;
+    window.onload = userAction;
     //}
 
 </script>

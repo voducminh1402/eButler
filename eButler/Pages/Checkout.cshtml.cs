@@ -3,16 +3,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PayPal.Api;
 using System.Collections.Generic;
 using System;
-using Microsoft.AspNetCore.Http;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http;
-using System.Security.Policy;
 using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
 using BusinessLogic.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace eButler.Pages
 {
@@ -51,6 +51,7 @@ namespace eButler.Pages
         public string Method { get; set; }
     }
     
+    [Authorize(Policy = "User")]
     public class CheckoutModel : PageModel
     {
         private const string URL = "https://api-m.sandbox.paypal.com/v2/checkout/orders";

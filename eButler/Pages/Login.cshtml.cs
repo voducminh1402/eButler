@@ -50,11 +50,15 @@ namespace eButler.Pages
             claims.Add(new Claim(ClaimTypes.NameIdentifier, User.UserName == null ? User.Id : User.UserName));
             if (user.IsSystemAdmin)
             {
-                claims.Add(new Claim(ClaimTypes.Role, "admin"));
+                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
             }
             if (Sup != null)
             {
                 claims.Add(new Claim(ClaimTypes.Role, "Supplier"));
+            }
+            if (user.RoleId.Equals("2"))
+            {
+                claims.Add(new Claim(ClaimTypes.Role, "User"));
             }
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -63,6 +67,11 @@ namespace eButler.Pages
             var properties = new AuthenticationProperties(items);
                 
             await HttpContext.SignInAsync(claimsPrincipal, properties);
+
+            if (user.RoleId.Equals("1") || user.RoleId.Equals("2"))
+            {
+                returnUrl = "/Admin/Index";
+            }
 
             if (string.IsNullOrEmpty(returnUrl))
             {

@@ -1,4 +1,5 @@
 using BusinessLogic.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace eButler.Pages
 {
+    [Authorize(Policy = "All")]
     public class EditProfileSupplierModel : PageModel
     {
         private readonly BusinessLogic.Models.eButlerContext _context;
