@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Pages/Admin/Shared/_AdminLayout.cshtml";
+    var password = TempData["password"] as string;
 }
 <div class="content-wrapper">
     <div class="row">
@@ -30,7 +31,7 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="User.Password" class="control-label"></label>
-                            <input asp-for="User.Password" class="form-control" />
+                            <input type="password" name="password" value="@password" class="form-control" />
                             <span asp-validation-for="User.Password" class="text-danger"></span>
                         </div>
                         <div class="form-group form-check">

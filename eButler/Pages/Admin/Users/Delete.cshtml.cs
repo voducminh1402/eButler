@@ -7,17 +7,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessLogic.Models;
 using Microsoft.AspNetCore.Authorization;
+using DataAccess.Repostiories;
 
 namespace eButler.Pages.Admin.Users
 {
     [Authorize(Policy = "AdminOnly")]
     public class DeleteModel : PageModel
     {
-        private readonly BusinessLogic.Models.eButlerContext _context;
+        private readonly IUserRepository userRepository;
 
-        public DeleteModel(BusinessLogic.Models.eButlerContext context)
+        public DeleteModel(IUserRepository userRepository)
         {
-            _context = context;
+            this.userRepository = userRepository;
         }
 
         [BindProperty]
@@ -25,37 +26,44 @@ namespace eButler.Pages.Admin.Users
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            User = await _context.Users
-                .Include(u => u.Role).FirstOrDefaultAsync(m => m.Id == id);
+                User = userRepository.GetUserByIdWithRole(id);
 
-            if (User == null)
+                if (User == null)
+                {
+                    return NotFound();
+                }
+                return Page();
+            } catch(Exception ex)
             {
-                return NotFound();
+                return BadRequest(ex.Message);
             }
-            return Page();
+            
         }
 
         public async Task<IActionResult> OnPostAsync(string id)
         {
-            if (id == null)
+            try
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                userRepository.DeleteUser(id);
+
+            return RedirectToPage("./Index");
+            }
+            catch(Exception ex)
             {
                 return NotFound();
             }
-
-            User = await _context.Users.FindAsync(id);
-
-            if (User != null)
-            {
-                _context.Users.Remove(User);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
         }
     }
 }

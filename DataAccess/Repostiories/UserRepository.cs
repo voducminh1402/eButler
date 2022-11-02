@@ -15,9 +15,13 @@ namespace DataAccess.Repostiories
         User AddNewUser(User user);
         User AddNewUser(List<Claim> claims);
         IEnumerable<User> GetAllUsers();
+        IEnumerable<User> GetUsersWithRole();
         User Login(string userName, string password);
         User GetUserByUserName(string username);
         User AddNewSupplier(User supplier);
+        User GetUserByIdWithRole(string id);
+        bool DeleteUser(string id);
+        User UpdateUser(User user);
     }
     public class UserRepository : IUserRepository
     {
@@ -54,6 +58,26 @@ namespace DataAccess.Repostiories
         public User Login(string userName, string password)
         {
             return UserService.GetInstance.Login(userName, password);
+        }
+
+        public IEnumerable<User> GetUsersWithRole()
+        {
+            return UserService.GetInstance.GetUsersWithRole();
+        }
+
+        public User GetUserByIdWithRole(string id)
+        {
+            return UserService.GetInstance.GetUserByIdWithRole(id);
+        }
+
+        public bool DeleteUser(string id)
+        {
+            return UserService.GetInstance.DeleteUser(id);
+        }
+
+        public User UpdateUser(User user)
+        {
+            return UserService.GetInstance.UpdateUser(user);
         }
     }
 }

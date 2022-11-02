@@ -1,5 +1,6 @@
 ﻿using BusinessLogic.Models;
 using DataAccess.Repostiories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace DataAccess.Services
 {
     public class UserService
     {
-        
-        
+
+
         private readonly eButlerContext _context = DbContextService.GetDbContext;
         public readonly ISupplierRepository _supplierRepository;
         private static UserService instance = null;
@@ -92,6 +93,27 @@ namespace DataAccess.Services
             return entity.Entity;
         }
 
+        public User UpdateUser(User user)
+        {
+            User user1 = GetUserByIdWithRole(user.Id);
+            if(user1 == null)
+            {
+                throw new Exception("User is not exist!");
+            }
+            else
+            {
+                user1.Email = user.Email;
+                user1.UserName = user.UserName;
+                user1.Password = user.Password;
+                user1.IsSystemAdmin = user.IsSystemAdmin;
+                user1.IsActive = user.IsActive;
+                user1.RoleId = user.RoleId;
+                var entity = _context.Users.Update(user1);
+                _context.SaveChanges();
+                return entity.Entity;
+            }
+        }
+
         public User AddNewSupplier(User user)
         {
             if (GetUserByUserName(user.UserName) != null)
@@ -109,7 +131,7 @@ namespace DataAccess.Services
             supplier.Phone = "empty";
             supplier.Disciption = "empty";
             supplier.Image = "empty";
-            
+
             var entity = _context.Users.Add(user);
             //entity = _context.Suppliers.Add(supplier);
             _context.SaveChanges();
@@ -121,6 +143,33 @@ namespace DataAccess.Services
         public IEnumerable<User> GetUsers()
         {
             return _context.Users.ToList();
+        }
+        public IEnumerable<User> GetUsersWithRole()
+        {
+            return _context.Users.Include(u => u.Role).ToList();
+        }
+        public bool DeleteUser(string id)
+        {
+            User user = GetUserById(id);
+            if (user != null)
+            {
+                user.IsActive = false;
+                var entity = _context.Users.Update(user);
+                _context.SaveChanges();
+                if (entity != null)
+                {
+                    return true;
+                }
+                return false;
+            } else
+            {
+                throw new Exception("User is not exit!");
+            }
+        }
+        public User GetUserByIdWithRole(string id)
+        {
+            return _context.Users
+                   .Include(u => u.Role).FirstOrDefault(m => m.Id == id || m.UserName == id);
         }
     }
 
