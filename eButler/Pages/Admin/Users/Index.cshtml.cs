@@ -7,25 +7,25 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BusinessLogic.Models;
 using Microsoft.AspNetCore.Authorization;
+using DataAccess.Repostiories;
 
 namespace eButler.Pages.Admin.Users
 {
     [Authorize(Policy = "AdminOnly")]
     public class IndexModel : PageModel
     {
-        private readonly BusinessLogic.Models.eButlerContext _context;
+        private readonly IUserRepository userRepository;
 
-        public IndexModel(BusinessLogic.Models.eButlerContext context)
+        public IndexModel(IUserRepository userRepository)
         {
-            _context = context;
+            this.userRepository = userRepository;
         }
 
         public IList<User> User { get;set; }
 
         public async Task OnGetAsync()
         {
-            User = await _context.Users
-                .Include(u => u.Role).ToListAsync();
+            User = userRepository.GetUsersWithRole().ToList();  
         }
     }
 }
