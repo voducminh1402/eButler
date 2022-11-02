@@ -3,11 +3,8 @@ using DataAccess.Repostiories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -36,7 +33,8 @@ namespace eButler.Pages
         {
             User user = userRepository.Login(User.UserName, User.Password);
             Sup = null;
-            Sup = supplierRepository.getSupplierByID(user.Id);
+            if(user != null)
+                Sup = supplierRepository.getSupplierByID(user.Id);
             if (user == null)
             {
                 TempData["Error"] = "User name or Password is not valid!";
@@ -71,7 +69,7 @@ namespace eButler.Pages
                 
             await HttpContext.SignInAsync(claimsPrincipal, properties);
 
-            if (user.RoleId.Equals("1") || user.RoleId.Equals("2"))
+            if (user.RoleId.Equals("1") || user.RoleId.Equals("3"))
             {
                 returnUrl = "/Admin/Index";
             }

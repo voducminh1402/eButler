@@ -52,6 +52,7 @@ namespace eButler
             services.AddScoped<ISupplierRepository, SupplierRepository>();
             services.AddScoped<ICheckOutRepository, CheckOutRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddHttpContextAccessor();
             services.AddScoped<eButlerContext>();
 

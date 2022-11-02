@@ -8,17 +8,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BusinessLogic.Models;
 using Microsoft.AspNetCore.Authorization;
+using DataAccess.Repostiories;
+using System.Globalization;
 
 namespace eButler.Pages.Admin.Users
 {
     [Authorize(Policy = "AdminOnly")]
     public class EditModel : PageModel
     {
-        private readonly BusinessLogic.Models.eButlerContext _context;
+        private readonly IUserRepository userRepository;
+        private readonly IRoleRepository roleRepository;
 
-        public EditModel(BusinessLogic.Models.eButlerContext context)
+        public EditModel(IRoleRepository roleRepository, IUserRepository userRepository)
         {
-            _context = context;
+            this.userRepository = userRepository;
+            this.roleRepository = roleRepository;
         }
 
         [BindProperty]
@@ -31,50 +35,40 @@ namespace eButler.Pages.Admin.Users
                 return NotFound();
             }
 
-            User = await _context.Users
-                .Include(u => u.Role).FirstOrDefaultAsync(m => m.Id == id);
+            User = userRepository.GetUserByIdWithRole(id);
+            TempData["password"] = User.Password;
 
             if (User == null)
             {
                 return NotFound();
             }
-           ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id");
+            ViewData["RoleId"] = new SelectList(roleRepository.GetRoles(), "Id", "Name");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string password)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Attach(User).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
+                if (!ModelState.IsValid)
+                {
+                    return Page();
+                }
+                TempData["password"] = password;
+                // _context.Attach(User).State = EntityState.Modified;
+                User.Password = password;
+                userRepository.UpdateUser(User);
+
+                return RedirectToPage("./Index");
+            } catch(Exception ex)
             {
-                if (!UserExists(User.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
-
-            return RedirectToPage("./Index");
+           
         }
 
-        private bool UserExists(string id)
-        {
-            return _context.Users.Any(e => e.Id == id);
-        }
+       
     }
 }

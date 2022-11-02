@@ -64,14 +64,16 @@ namespace BusinessLogic.Models
 
                 entity.Property(e => e.Id).HasMaxLength(50);
 
-                entity.Property(e => e.FullName).HasMaxLength(100);
+                entity.Property(e => e.FullName)
+                    .HasMaxLength(100);
 
-                entity.Property(e => e.Gender).HasMaxLength(50);
+                entity.Property(e => e.Gender)
+                    .HasMaxLength(50);
 
-                entity.Property(e => e.Image).HasMaxLength(100);
+                entity.Property(e => e.Image)
+                    .HasMaxLength(100);
 
                 entity.Property(e => e.Phone)
-                    .IsRequired()
                     .HasMaxLength(10)
                     .IsFixedLength(true);
 
@@ -85,6 +87,8 @@ namespace BusinessLogic.Models
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.ToTable("Order");
+
+                entity.HasIndex(e => e.UserId, "IX_Order_UserId");
 
                 entity.Property(e => e.Id).HasMaxLength(50);
 
@@ -132,6 +136,8 @@ namespace BusinessLogic.Models
             {
                 entity.ToTable("Product");
 
+                entity.HasIndex(e => e.CategoryId, "IX_Product_CategoryId");
+
                 entity.Property(e => e.Id).HasMaxLength(50);
 
                 entity.Property(e => e.CategoryId)
@@ -153,11 +159,15 @@ namespace BusinessLogic.Models
             {
                 entity.ToTable("ProductSupplier");
 
+                entity.HasIndex(e => e.ProductId, "IX_ProductSupplier_ProductId");
+
+                entity.HasIndex(e => e.SupplierId, "IX_ProductSupplier_SupplierId");
+
                 entity.Property(e => e.Id).HasMaxLength(50);
 
                 entity.Property(e => e.Image)
                     .IsRequired()
-                    .HasMaxLength(100);
+                    .HasMaxLength(150);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -199,11 +209,13 @@ namespace BusinessLogic.Models
             {
                 entity.ToTable("Shipping");
 
+                entity.HasIndex(e => e.HouseKeeperId, "IX_Shipping_HouseKeeperId");
+
                 entity.Property(e => e.Id).HasMaxLength(50);
 
                 entity.Property(e => e.Address)
-                    .IsRequired()
-                    .HasMaxLength(200);
+                    .HasMaxLength(200)
+                    .HasDefaultValueSql("(N'Address')");
 
                 entity.Property(e => e.City)
                     .IsRequired()
@@ -253,7 +265,7 @@ namespace BusinessLogic.Models
 
                 entity.Property(e => e.Image)
                     .IsRequired()
-                    .HasMaxLength(100);
+                    .HasMaxLength(150);
 
                 entity.Property(e => e.Name)
                     .IsRequired()
@@ -274,6 +286,10 @@ namespace BusinessLogic.Models
             modelBuilder.Entity<Transaction>(entity =>
             {
                 entity.ToTable("Transaction");
+
+                entity.HasIndex(e => e.OrderId, "IX_Transaction_OrderId");
+
+                entity.HasIndex(e => e.WalletId, "IX_Transaction_WalletId");
 
                 entity.Property(e => e.Id).HasMaxLength(50);
 
@@ -315,6 +331,8 @@ namespace BusinessLogic.Models
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("User");
+
+                entity.HasIndex(e => e.RoleId, "IX_User_RoleId");
 
                 entity.Property(e => e.Id).HasMaxLength(50);
 

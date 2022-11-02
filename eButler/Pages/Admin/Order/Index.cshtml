@@ -1,6 +1,9 @@
 ﻿@page
+@using Microsoft.AspNetCore.Http
 @model eButler.Pages.Admin.Order.IndexModel
 @{
+    var session = HttpContext.Session;
+    BusinessLogic.Models.User user = Newtonsoft.Json.JsonConvert.DeserializeObject<BusinessLogic.Models.User>(session.GetString("LOGIN_USER"));
 }
 
 <div class="content-wrapper">
@@ -19,23 +22,44 @@
                                     <th>User ID</th>
                                     <th>Created Date</th>
                                     <th>Status</th>
-                                    <th>Total</th>
+                                    @if (!user.RoleId.Equals("3"))
+                                    {
+                                <th>Total</th>
+                                    }
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model.OrderResponses)
                                 {
-                                    <tr>
-                                        <td>@(item.Order.Id)</td>
-                                        <td>@(item.Order.UserId)</td>
-                                        <td>@(item.Order.CreateDate)</td>
+                                <tr>
+                                    <td>@(item.Order.Id)</td>
+                                    <td>@(item.Order.UserId)</td>
+                                    <td>@(item.Order.CreateDate)</td>
+                                    @if (item.Status.Equals("Pending"))
+                                    {
+                                        <td><label class="badge badge-warning">@(item.Status)</label></td>
+                                    }
+                                    @if (item.Status.Equals("Shipping"))
+                                    {
+                                        <td><label class="badge badge-primary">@(item.Status)</label></td>
+                                    }
+                                    @if (item.Status.Equals("Canceled"))
+                                    {
+                                        <td><label class="badge badge-danger">@(item.Status)</label></td>
+                                    }
+                                    @if (item.Status.Equals("Shipped"))
+                                    {
                                         <td><label class="badge badge-success">@(item.Status)</label></td>
-                                        <td>@(item.Order.TotalPrice)</td>
-                                        <td>
-                                            <a href="/Admin/Order/Detail?orderId=@(item.Order.Id)">Detail</a>
-                                        </td>
-                                    </tr>
+                                    }
+                                    @if (!user.RoleId.Equals("3"))
+                                    {
+                                <td>@(item.Order.TotalPrice)</td>
+                                    }
+                                    <td>
+                                        <a href="/Admin/Order/Detail?orderId=@(item.Order.Id)">Detail</a>
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>
