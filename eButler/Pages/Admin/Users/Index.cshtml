@@ -12,16 +12,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">User Management</h4>
-                        <a class="card-description" asp-page="Create">
-                            Create New User
-                        </a>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Email</th>
                                         <th>User Name</th>
-                                        <th>Password</th>
                                         <th>Is Active</th>
                                         <th>Is System Admin</th>
                                         <th>Role</th>
@@ -39,20 +35,17 @@
                                                 @Html.DisplayFor(modelItem => item.UserName)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Password)
-                                            </td>
-                                            <td>
                                                 @Html.DisplayFor(modelItem => item.IsActive)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.IsSystemAdmin)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Role.Id)
+                                                @Html.DisplayFor(modelItem => item.Role.Name)
                                             </td>
                                             <td class="template-demo" style="padding-top: 0; padding-bottom: 0">
                                                 <a class="btn btn-primary btn-icon-text" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
-                                                <a class="btn btn-info btn-icon-text" asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                                               
                                                 <a class="btn btn-danger btn-icon-text" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
                                             </td>
                                         </tr>
@@ -70,62 +63,3 @@
     <h2>List empty</h2>
 }
 
-@*<h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].IsSystemAdmin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].Role)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.User) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsSystemAdmin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role.Id)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>*@
