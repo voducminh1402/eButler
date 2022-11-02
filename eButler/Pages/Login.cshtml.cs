@@ -46,7 +46,10 @@ namespace eButler.Pages
             ViewData["ReturnUrl"] = returnUrl;
             var claims = new List<Claim>();
             claims.Add(new Claim("username", User.UserName));
-            claims.Add(new Claim("supplierID", user.Id));
+            if (Sup != null)
+            {
+                claims.Add(new Claim("supplierID", user.Id));
+            }
             claims.Add(new Claim(ClaimTypes.NameIdentifier, User.UserName == null ? User.Id : User.UserName));
             if (user.IsSystemAdmin)
             {
