@@ -52,5 +52,27 @@ namespace DataAccess.Services
 
             return returnList;
         }
+
+        public List<OrderDetail> OrderDetailsByOrderAndSupplier(string supplierId, string orderId)
+        {
+            List<ProductSupplier> productSuppliers = _context.ProductSuppliers.Where(x => x.SupplierId.Equals(supplierId)).ToList();
+            List<OrderDetail> orderDetails = _context.OrderDetails.ToList();
+            List<OrderDetail> tmpList = new List<OrderDetail>();
+
+            foreach (var item in productSuppliers)
+            {
+                foreach (var orderDetail in orderDetails)
+                {
+                    if (item.Id.Equals(orderDetail.ProductSupplierId))
+                    {
+                        tmpList.Add(orderDetail);
+                    }
+                }
+            }
+
+            List<OrderDetail> orderDetailTmp = tmpList.Where(u => u.OrderId.Equals(orderId)).GroupBy(x => x.OrderId).Select(o => o.First()).ToList();
+
+            return orderDetailTmp;
+        }
     }
 }

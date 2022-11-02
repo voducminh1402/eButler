@@ -37,6 +37,35 @@ namespace DataAccess.Services
             return orderCreated;
         }
 
+        public List<Order> GetOrderBySupplier(string supplierId)
+        {
+            List<ProductSupplier> productSuppliers = _context.ProductSuppliers.Where(x => x.SupplierId.Equals(supplierId)).ToList();
+            List<OrderDetail> orderDetails = _context.OrderDetails.ToList();
+            List<OrderDetail> tmpList = new List<OrderDetail>();
+
+            foreach(var item in productSuppliers)
+            {
+                foreach (var orderDetail in orderDetails)
+                {
+                    if (item.Id.Equals(orderDetail.ProductSupplierId))
+                    {
+                        tmpList.Add(orderDetail);
+                    }
+                }
+            }
+
+            List<OrderDetail> orderDetailTmp = tmpList.GroupBy(x => x.OrderId).Select(o => o.First()).ToList();
+
+            List<Order> orderReturn = new List<Order>();
+
+            foreach (var orderDetail in orderDetailTmp)
+            {
+                orderReturn.Add(_context.Orders.Where(x => x.Id.Equals(orderDetail.OrderId)).FirstOrDefault());
+            }
+
+            return orderReturn;
+        }
+
         public string OrderStatus(Order order)
         {
             Shipping shipping = _context.Shippings.Where(x => x.Id.Equals(order.Id)).FirstOrDefault();

@@ -130,7 +130,7 @@ namespace eButler.Pages
             {
                 Error = ex.Message;
             }
-            return RedirectToPage("/Cart");
+            return Page();
         }
     }
 }
