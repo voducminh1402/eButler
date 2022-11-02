@@ -39,6 +39,7 @@ namespace DataAccess.Services
         {
             var shipping = new Shipping()
             {
+                Id = Guid.NewGuid().ToString(),
                 Status = status,
                 Distric = distric,
                 City = city,

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
@@ -14,7 +15,7 @@ namespace BusinessLogic.Models
 
         public string Id { get; set; }
         public string Name { get; set; }
-
+        [JsonIgnore]
         public virtual ICollection<User> Users { get; set; }
     }
 }
