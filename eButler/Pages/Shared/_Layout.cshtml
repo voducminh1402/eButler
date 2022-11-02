@@ -76,6 +76,7 @@
                             @if (User.Identity.IsAuthenticated && User.IsInRole("Supplier"))
                             {
                                 <li class="nav-item"><a class="nav-link" asp-page="/Admin/ProductSuppliers/Index">Manage Your Product</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-page="/ProfileSupplier">Your Profile</a></li>
                             }
 
                             @if(User.Identity.IsAuthenticated){
