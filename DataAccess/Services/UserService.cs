@@ -86,9 +86,12 @@ namespace DataAccess.Services
             user.Id = Guid.NewGuid().ToString();
             user.IsActive = true;
             user.Email = user.UserName;
-            user.RoleId = "1";
+            user.RoleId = "2";
             user.IsSystemAdmin = false;
             var entity = _context.Users.Add(user);
+            var houseKeeper = new HouseKeeper();
+            houseKeeper.Id = user.Id;
+            _context.HouseKeepers.Add(houseKeeper);
             _context.SaveChanges();
             return entity.Entity;
         }
