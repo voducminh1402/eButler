@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic.Models;
 using DataAccess.Repostiories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -35,9 +37,21 @@ namespace eButler.Pages.Admin.Order
 
         public void OnGet(string orderId)
         {
+            var session = HttpContext.Session;
+            User user = Newtonsoft.Json.JsonConvert.DeserializeObject<User>(session.GetString("LOGIN_USER"));
+
             BusinessLogic.Models.Order order = _orderRepository.GetOrderById(orderId);
             BusinessLogic.Models.Shipping shipping = _shippingRepository.GetShippingById(orderId);
-            List<BusinessLogic.Models.OrderDetail> orderDetails = _orderDetailRepository.GetOrderDetailsByOrder(orderId);
+            List<BusinessLogic.Models.OrderDetail> orderDetails = new List<OrderDetail>();
+
+            if (user.RoleId.Equals("3"))
+            {
+                orderDetails = _orderDetailRepository.GetOrderDetailBySupplier(user.Id, orderId);
+            }
+            else
+            {
+                orderDetails = _orderDetailRepository.GetOrderDetailsByOrder(orderId);
+            }
 
             OrderResponses = new ResponseOrderDetail
             {

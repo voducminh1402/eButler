@@ -14,6 +14,7 @@ namespace DataAccess.Repostiories
         Order GetOrderById(string id);
         Order CreateOrder(Order order);
         string OrderStatus(Order order);
+        List<Order> GetOrderBySupplier(string supplierId);
     }
     public class OrderRepository : IOrderRepository
     {
@@ -25,6 +26,11 @@ namespace DataAccess.Repostiories
         public Order GetOrderById(string id)
         {
             return OrderService.GetInstance.GetOrderById(id);
+        }
+
+        public List<Order> GetOrderBySupplier(string supplierId)
+        {
+            return OrderService.GetInstance.GetOrderBySupplier(supplierId);
         }
 
         public List<Order> GetOrders()

@@ -1,10 +1,16 @@
 ﻿@page
+@using Microsoft.AspNetCore.Http
 @model eButler.Pages.Admin.Order.DetailModel
 @{
+    var session = HttpContext.Session;
+    BusinessLogic.Models.User user = Newtonsoft.Json.JsonConvert.DeserializeObject<BusinessLogic.Models.User>(session.GetString("LOGIN_USER"));
 }
 
 <section class="order_details section_gap">
     <div class="container mt-5 mb-5">
+        <div class="row">
+            <a href="/Admin/Order/Index" class="ml-3 mb-3 btn btn-primary">Back To List</a>
+        </div>
         <div class="row order_d_inner">
             <div class="col-lg-4">
                 <div class="details_item">
@@ -34,40 +40,41 @@
                         <li><a href="#"><span>Status</span>
                                         <div class="form-group">
                                             <form action="" method="post">
-                                                <input type="hidden" name="id" value="@(Model.OrderResponses.Shipping.Id)"/>
-                                                <select name="status" onchange="this.form.submit()" class="form-control form-control-sm" id="exampleFormControlSelect3">
-                                                    @if (Model.OrderResponses.Shipping.Status.Equals("Pending"))
-                                                    {
-                                                        <option selected value="Pending">Pending</option>
-                                                        <option value="Shipping">Shipping</option>
-                                                        <option value="Canceled">Canceled</option>
-                                                        <option value="Shipped">Shipped</option>
-                                                    }
-                                                    @if (Model.OrderResponses.Shipping.Status.Equals("Shipping"))
-                                                    {
-                                                        <option value="Pending">Pending</option>
-                                                        <option selected value="Shipping">Shipping</option>
-                                                        <option value="Canceled">Canceled</option>
-                                                        <option value="Shipped">Shipped</option>
-                                                    }
-                                                    @if (Model.OrderResponses.Shipping.Status.Equals("Canceled"))
-                                                    {
-                                                        <option value="Pending">Pending</option>
-                                                        <option value="Shipping">Shipping</option>
-                                                        <option selected value="Canceled">Canceled</option>
-                                                        <option value="Shipped">Shipped</option>
-                                                    }
-                                                    @if (Model.OrderResponses.Shipping.Status.Equals("Shipped"))
-                                                    {
-                                                        <option value="Pending">Pending</option>
-                                                        <option value="Shipping">Shipping</option>
-                                                        <option  value="Canceled">Canceled</option>
-                                                        <option selected value="Shipped">Shipped</option>
-                                                    }
-
-
-
-                                                </select>
+                                                <input type="hidden" name="id" value="@(Model.OrderResponses.Shipping.Id)" />
+                                                @if (!user.RoleId.Equals("3"))
+                                                {
+                                            <select name="status" onchange="this.form.submit()" class="form-control form-control-sm" id="exampleFormControlSelect3">
+                                                @if (Model.OrderResponses.Shipping.Status.Equals("Pending"))
+                                                {
+                                                    <option selected value="Pending">Pending</option>
+                                                    <option value="Shipping">Shipping</option>
+                                                    <option value="Canceled">Canceled</option>
+                                                    <option value="Shipped">Shipped</option>
+                                                }
+                                                @if (Model.OrderResponses.Shipping.Status.Equals("Shipping"))
+                                                {
+                                                    <option value="Pending">Pending</option>
+                                                    <option selected value="Shipping">Shipping</option>
+                                                    <option value="Canceled">Canceled</option>
+                                                    <option value="Shipped">Shipped</option>
+                                                }
+                                                @if (Model.OrderResponses.Shipping.Status.Equals("Canceled"))
+                                                {
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Shipping">Shipping</option>
+                                                    <option selected value="Canceled">Canceled</option>
+                                                    <option value="Shipped">Shipped</option>
+                                                }
+                                                @if (Model.OrderResponses.Shipping.Status.Equals("Shipped"))
+                                                {
+                                                    <option value="Pending">Pending</option>
+                                                    <option value="Shipping">Shipping</option>
+                                                    <option value="Canceled">Canceled</option>
+                                                    <option selected value="Shipped">Shipped</option>
+                                                }
+                                            </select>
+                                                }
+                                                
                                             </form>
                                         </div>
                             </a>
@@ -84,11 +91,14 @@
                         <tr>
                             <th scope="col">Product</th>
                             <th scope="col">Quantity</th>
-                            <th scope="col">Total</th>
+                            @if (!user.RoleId.Equals("3"))
+                            {
+                                <th scope="col">Total</th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in Model.OrderResponses.OrderDetails)
+                        @foreach (var item in Model.OrderResponses.OrderDetails)
                         {
                             <tr>
                                 <td>
@@ -102,7 +112,9 @@
                                 </td>
                             </tr>
                         }
-                        
+
+                        @if (!user.RoleId.Equals("3"))
+                        {
                         <tr>
                             <td>
                                 <h4>Total</h4>
@@ -113,9 +125,11 @@
                             <td>
                                 <p>$@(Model.OrderResponses.Order.TotalPrice)</p>
                             </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    </tr>
+                    }
+                        
+                        </tbody>
+                    </table>
             </div>
         </div>
     </div>

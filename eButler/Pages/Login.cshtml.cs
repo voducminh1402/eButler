@@ -46,7 +46,10 @@ namespace eButler.Pages
             ViewData["ReturnUrl"] = returnUrl;
             var claims = new List<Claim>();
             claims.Add(new Claim("username", User.UserName));
-            claims.Add(new Claim("supplierID", user.Id));
+            if (Sup != null)
+            {
+                claims.Add(new Claim("supplierID", user.Id));
+            }
             claims.Add(new Claim(ClaimTypes.NameIdentifier, User.UserName == null ? User.Id : User.UserName));
             if (user.IsSystemAdmin)
             {
@@ -68,7 +71,7 @@ namespace eButler.Pages
                 
             await HttpContext.SignInAsync(claimsPrincipal, properties);
 
-            if (user.RoleId.Equals("1") || user.RoleId.Equals("2"))
+            if (user.RoleId.Equals("1") || user.RoleId.Equals("3"))
             {
                 returnUrl = "/Admin/Index";
             }

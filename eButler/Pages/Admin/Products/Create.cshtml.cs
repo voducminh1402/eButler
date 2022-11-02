@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BusinessLogic.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eButler.Pages.Admin.Products
 {
+    [Authorize(Policy = "AdminOnly")]
     public class CreateModel : PageModel
     {
         private readonly BusinessLogic.Models.eButlerContext _context;
@@ -21,6 +23,7 @@ namespace eButler.Pages.Admin.Products
         public IActionResult OnGet()
         {
         ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
+        ViewData["CategoryName"] = new SelectList(_context.Categories, "Id", "Name");
             return Page();
         }
 
