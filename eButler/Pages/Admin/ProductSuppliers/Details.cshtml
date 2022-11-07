@@ -10,7 +10,7 @@
 
 <div class="content-wrapper">
     <div class="row">
-        <div class="col-md-6 grid-margin stretch-card">
+        <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">ProductSupplier Details</h4>
@@ -42,14 +42,14 @@
                                 <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.ProductSupplier.Image)</h5></td>
                             </tr>
                             <tr>
-                                <td class="text-muted">.ProductId</td>
+                                <td class="text-muted">Product</td>
 
-                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.ProductSupplier.Product.Id)</h5></td>
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.ProductSupplier.Product.Name)</h5></td>
                             </tr>
                             <tr>
-                                <td class="text-muted">Supplier.Id</td>
+                                <td class="text-muted">Supplier</td>
 
-                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.ProductSupplier.Supplier.Id)</h5></td>
+                                <td><h5 class="font-weight-bold mb-0">@Html.DisplayFor(model => model.ProductSupplier.Supplier.Name)</h5></td>
                             </tr>
                         </tbody>
                     </table>
