@@ -6,10 +6,10 @@
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Pages/Admin/Shared/_AdminLayout.cshtml";
-    var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-    var id = result.Principal.Claims.FirstOrDefault(x => x.Type == "supplierID").Value;
+    
     var genID = Guid.NewGuid().ToString();
 }
+
 
 
 <div class="content-wrapper">
@@ -46,11 +46,7 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="ProductSupplier.SupplierId" class="control-label">Supplier</label>
-                            @if(User.IsInRole("Supplier")){
-                                <input readonly asp-for="ProductSupplier.SupplierId" class="form-control" value=@id />
-                            }else{
-                                <select asp-for="ProductSupplier.SupplierId" class="form-control" asp-items="ViewBag.SupplierName"></select>
-                            }
+                            <select asp-for="ProductSupplier.SupplierId" class="form-control" asp-items="ViewBag.SupplierName"></select>
                             
                         </div>
                         <div class="form-group">

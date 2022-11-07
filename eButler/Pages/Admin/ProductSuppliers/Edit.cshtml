@@ -6,10 +6,12 @@
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Pages/Admin/Shared/_AdminLayout.cshtml";
-    var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-    var id = result.Principal.Claims.FirstOrDefault(x => x.Type == "supplierID").Value;
+    //var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    //var id = result.Principal.Claims.FirstOrDefault(x => x.Type == "supplierID").Value;
 }
-
+@*Demo nhớ né đoạn create này ra vì chỉ được tạo khi là supplier, thuyết trình rằng tạo product supplier y chang như bên supplier
+    fix theo cách comment lại như trên.
+*@
 
 <div class="content-wrapper">
     <div class="row">
@@ -42,14 +44,15 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="ProductSupplier.SupplierId" class="control-label">Supplier</label>
-                            @if (User.IsInRole("Supplier"))
+                            <select asp-for="ProductSupplier.SupplierId" class="form-control" asp-items="ViewBag.SupplierName"></select>
+                            @*@if (User.IsInRole("Supplier"))
                             {
                                 <input readonly asp-for="ProductSupplier.SupplierId" class="form-control" value=@id />
                             }
                             else
                             {
                                 <select asp-for="ProductSupplier.SupplierId" class="form-control" asp-items="ViewBag.SupplierName"></select>
-                            }
+                            }*@
                         </div>
                         <div class="form-group">
                             <label asp-for="ProductSupplier.Discount" class="control-label"></label>
